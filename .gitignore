@@ -1,0 +1,7 @@
+__pycache__
+
+# Ignores FreeCAD Backup files
+*.FCBak
+
+.vscode
+
