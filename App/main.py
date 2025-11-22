@@ -2,6 +2,10 @@ import FreeCAD as App
 from FreeCAD import Vector
 import math
 
+import json
+import random
+import os
+
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
 A1 = App.Vector(1,2,3)
@@ -23,6 +27,66 @@ B2 = rot.multVec(A2)
 # print(B1)
 # print(B2)
 # print(A1.getAngle(A2))
+
+#Data structure
+
+Knot1 = {
+	"P0": {
+		"Direction": App.Vector(1,2,5)	,
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	"P1": {
+		"Direction": App.Vector(0,-2,5)	,
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	"P2": {
+		"Direction": App.Vector(2,-5,15),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	}
+}
+
+def TransformKnot(K,axis,angle):
+	rot = App.Rotation(axis,angle)
+	n = -1
+	while n < len(K): #Would be more elegant with a for Loop but i dont know how
+		n = n+1
+		V = K[f"P{n}"]["Direction"]
+		V = rot.multVec(V)
+		K[f"P{n}"].update({"Direction":V})
+	return(K)
+
+# TransformKnot(Knot1,axis,alpha)
+
+def GenerateVector(range=100,step=1):
+	x = random.randrange(-range,range,step)
+	y = random.randrange(-range,range,step)
+	z = random.randrange(-range,range,step)
+	return App.Vector(x,y,z)
+	
+def GenererateProfile(type="x",angle=0,sym=4):
+	Profile = {
+		"Direction": GenerateVector(),
+		"Type": type,
+		"Angle":angle,
+		"n-fold_Symeterty":sym
+	}
+	return Profile
+
+def GenerateKnot(n=3,type="x",angle=0,sym=4):
+	pass
+
+
+def LoadKnot():
+	pass
+
+def FCtoKnot():
+	pass
 
 
 def IsTransformend(A1,B1,A2,B2,tol = 1e-6): # 
@@ -93,4 +157,3 @@ def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	else:
 		return [axis,angle]
 
-# print(FindAxisAngle(A1,B1,A2,B2))
