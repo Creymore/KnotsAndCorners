@@ -39,7 +39,7 @@ def GenerateKnots(n=2):
 		knots.update({f"Knot{i}":GenerateKnot()})
 	return knots
 
-def SaveKnots(dir="DummyKnots.json",knots):
+def SaveKnots(knots,dir="DummyKnots.json"):
 	jknots = json.dumps(knots,indent=4)
 	with open(dir,"w") as f:
 		f.write(jknots)
