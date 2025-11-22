@@ -1,5 +1,6 @@
 import FreeCAD as App
 import random
+import json
 
 def TransformKnot(K,axis,angle):
 	rot = App.Rotation(axis,angle)
@@ -11,14 +12,12 @@ def TransformKnot(K,axis,angle):
 		K[f"P{n}"].update({"Direction":V})
 	return(K)
 
-# TransformKnot(Knot1,axis,alpha)
-
 def GenerateVector(range=100,step=1):
 	x = random.randrange(-range,range,step)
 	y = random.randrange(-range,range,step)
 	z = random.randrange(-range,range,step)
 	return App.Vector(x,y,z)
-	
+
 def GenerateProfile(type="x",angle=0,sym=4):
 	Profile = {
 		"Direction": GenerateVector(),
@@ -40,7 +39,12 @@ def GenerateKnots(n=2):
 		knots.update({f"Knot{i}":GenerateKnot()})
 	return knots
 
+def SaveKnots(dir="DummyKnots.json",knots):
+	jknots = json.dumps(knots,indent=4)
+	with open(dir,"w") as f:
+		f.write(jknots)
 
 def LoadKnot():
+	
 	pass
 
