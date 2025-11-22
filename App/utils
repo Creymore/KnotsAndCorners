@@ -1,0 +1,8 @@
+# from ChatGBT
+def print_dict(d, indent=0):
+    for key, value in d.items():
+        print(" " * indent + str(key) + ":")
+        if isinstance(value, dict):
+            print_dict(value, indent + 4)
+        else:
+            print(" " * (indent + 4) + str(value))

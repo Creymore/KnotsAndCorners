@@ -1,10 +1,7 @@
 import FreeCAD as App
 from FreeCAD import Vector
 import math
-
-import json
-import random
-import os
+import helper
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
@@ -51,56 +48,18 @@ Knot1 = {
 	}
 }
 
-def TransformKnot(K,axis,angle):
-	rot = App.Rotation(axis,angle)
-	n = -1
-	while n < len(K): #Would be more elegant with a for Loop but i dont know how
-		n = n+1
-		V = K[f"P{n}"]["Direction"]
-		V = rot.multVec(V)
-		K[f"P{n}"].update({"Direction":V})
-	return(K)
-
-# TransformKnot(Knot1,axis,alpha)
-
-def GenerateVector(range=100,step=1):
-	x = random.randrange(-range,range,step)
-	y = random.randrange(-range,range,step)
-	z = random.randrange(-range,range,step)
-	return App.Vector(x,y,z)
-	
-def GenererateProfile(type="x",angle=0,sym=4):
-	Profile = {
-		"Direction": GenerateVector(),
-		"Type": type,
-		"Angle":angle,
-		"n-fold_Symeterty":sym
-	}
-	return Profile
-
-def GenerateKnot(n=3,type="x",angle=0,sym=4):
-	pass
-
-
-def LoadKnot():
-	pass
-
 def FCtoKnot():
 	pass
 
 
-def IsTransformend(A1,B1,A2,B2,tol = 1e-6): # 
+def IsTransformend(A1,B1,A2,B2,tol = 1e-6):
 	a = A1.getAngle(A2)
 	b = B1.getAngle(B2)
 	if a - b < tol: #What about Tolerance
 		return True
 	else:
-		# print(a)
-		# print(b)
 		print("Vector Pairs A1 A2 does not Match B1 B2") #Debug
 		return False
-
-# print(IsTransformend(A1,B1,A2,B2))
 
 def IsOppesite(V1,V2,tol = 1e-6):
 	C = V1.cross(V2)
