@@ -2,6 +2,7 @@ import FreeCAD as App
 from FreeCAD import Vector
 import math
 import helper
+from itertools import combinations
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
@@ -48,7 +49,33 @@ Knot1 = {
 	}
 }
 
+Knot1ID = {
+	"P0": {
+		# "Direction": App.Vector(1,2,5)	,
+		"Type": "x"							,
+		"Angle":0							,
+		"n-fold_Symeterty":4				,
+		
+	},
+	"P1": {
+		# "Direction": App.Vector(0,-2,5)	,
+		"Type": "x"							,
+		"Angle":0							,
+		"n-fold_Symeterty":4	
+	},
+	"P2": {
+		# "Direction": App.Vector(2,-5,15)	,
+		"Type": "x"							,
+		"Angle":0							,
+		"n-fold_Symeterty":4	
+	}
+}
+
 def FCtoKnot():
+	pass
+
+def KnotToID(K):
+	
 	pass
 
 

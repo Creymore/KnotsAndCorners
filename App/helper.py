@@ -60,16 +60,22 @@ def VecArrayToFcVec(V):
 	v = App.Vector(V[0],V[1],V[2])
 	return v
 
-def SaveKnots(knots,dir="App\DummyKnots.json"):
+def SaveKnots(knots,dir="App/DummyKnots.json"):
 	knots = convert_vectors(knots) # Somehow the FreeCAD Json does not like FreeCAD Vector Objects https://github.com/FreeCAD/FreeCAD/issues/25566
-	jknots = json.dumps(knots,indent=0)
+	jknots = json.dumps(knots,indent=4)
 	with open(dir,"w") as f:
 		f.write(jknots)
 
-def LoadKnot(n,dir):
-	
-	pass
-
+def LoadKnot(n=0,dir="App\DummyKnots.json"):
+	with open(dir,"r") as f:
+		data = json.load(f)
+		try:
+			data = data[f"Knot{n}"]
+			data = VecArrayToFcVec(data) # Needs converting back https://github.com/FreeCAD/FreeCAD/issues/25566
+			return data
+		except:
+			print(f"Knot{n} does not exsit")
+			return False
 
 if __name__ == "__main__" :
 	Knots = GenerateKnots(10)
@@ -84,3 +90,4 @@ if __name__ == "__main__" :
 	# print_dict(Knot)
 	# Knot = convert_lists_to_vectors(Knot)
 	# print_dict(Knot)
+	print_dict(LoadKnot(0))
