@@ -1,0 +1,322 @@
+{
+"Knot0": {
+"P0": {
+"Direction": [
+61.0,
+-22.0,
+-94.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-7.0,
+-75.0,
+-47.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+96.0,
+35.0,
+-70.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot1": {
+"P0": {
+"Direction": [
+-57.0,
+-99.0,
+-14.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+83.0,
+56.0,
+14.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+16.0,
+23.0,
+-41.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot2": {
+"P0": {
+"Direction": [
+94.0,
+-100.0,
+69.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-15.0,
+-1.0,
+-62.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+65.0,
+-55.0,
+6.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot3": {
+"P0": {
+"Direction": [
+4.0,
+-45.0,
+4.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+67.0,
+-7.0,
+51.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+76.0,
+-40.0,
+-6.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot4": {
+"P0": {
+"Direction": [
+-72.0,
+13.0,
+-44.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+85.0,
+19.0,
+-80.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+41.0,
+-70.0,
+-46.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot5": {
+"P0": {
+"Direction": [
+-36.0,
+-75.0,
+84.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-67.0,
+-65.0,
+-58.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+-13.0,
+51.0,
+-22.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot6": {
+"P0": {
+"Direction": [
+75.0,
+-44.0,
+59.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-85.0,
+40.0,
+-41.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+-16.0,
+-25.0,
+-43.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot7": {
+"P0": {
+"Direction": [
+-97.0,
+80.0,
+98.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-78.0,
+75.0,
+36.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+-3.0,
+-64.0,
+-17.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot8": {
+"P0": {
+"Direction": [
+-81.0,
+62.0,
+76.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+56.0,
+84.0,
+-75.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+-78.0,
+60.0,
+40.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+},
+"Knot9": {
+"P0": {
+"Direction": [
+52.0,
+-59.0,
+-93.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P1": {
+"Direction": [
+-100.0,
+-67.0,
+-16.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+},
+"P2": {
+"Direction": [
+93.0,
+-23.0,
+10.0
+],
+"Type": "x",
+"Angle": 0,
+"n-fold_Symeterty": 4
+}
+}
+}
