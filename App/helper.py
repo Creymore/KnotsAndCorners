@@ -45,8 +45,8 @@ def GenerateKnots(n=2):
 def GenerateKnotPair(Knot):
 	angle = random.randrange(-180,180,1)
 	axis = GenerateVector()
-	t = TransformKnot(Knot,axis,angle)
-	return [t,Knot]
+	transformnedKnot = TransformKnot(Knot,axis,angle)
+	return [transformnedKnot,Knot]
 
 def FcVecToVecArray(V):
 	v = [
@@ -71,7 +71,7 @@ def LoadKnot(n=0,dir="App\DummyKnots.json"):
 		data = json.load(f)
 		try:
 			data = data[f"Knot{n}"]
-			data = VecArrayToFcVec(data) # Needs converting back https://github.com/FreeCAD/FreeCAD/issues/25566
+			data = convert_lists_to_vectors(data) # Needs converting back https://github.com/FreeCAD/FreeCAD/issues/25566
 			return data
 		except:
 			print(f"Knot{n} does not exsit")

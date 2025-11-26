@@ -3,6 +3,7 @@ from FreeCAD import Vector
 import math
 import helper
 from itertools import combinations
+from itertools import permutations
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
@@ -46,6 +47,12 @@ Knot1 = {
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
+	},
+	"P3": {
+		"Direction": App.Vector(2,-5,0),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
 	}
 }
 
@@ -71,11 +78,28 @@ Knot1ID = {
 	}
 }
 
+def getAngleKnotP(Knot,n,m,deg=True):
+	Vn = Knot[f"P{n}"]["Direction"]
+	Vm = Knot[f"P{m}"]["Direction"]
+	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
+
+	if deg is True: # Is the function used in deg or rad mode
+		return [axis,math.degrees(alpha)]
+	else:
+		return [axis,alpha]
+
 def FCtoKnot():
 	pass
 
 def KnotToID(K):
-	
+	print(len(K))
+	ID = list(permutations(range(len(K)),2))
+	print(ID)
+	pass
+
+KnotToID(Knot1)
+
+def IDToKnot(ID):
 	pass
 
 
@@ -99,7 +123,7 @@ def IsOppesite(V1,V2,tol = 1e-6):
 def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	A1,B1,A2,B2 = A1.normalize(),B1.normalize(),A2.normalize(),B2.normalize()
 	if not IsTransformend(A1,B1,A2,B2):
-		return
+		return False
 	
 	if IsOppesite(A1,B1):
 		E1 = A1
