@@ -1,3 +1,6 @@
+# Utilities from ChatGBT that are ment to help during Devolpment 
+# I wanted to seperate the code from ChatGBT from mine because of clarity
+
 import FreeCAD as App
 
 # from ChatGBT

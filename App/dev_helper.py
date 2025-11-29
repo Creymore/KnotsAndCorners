@@ -1,3 +1,6 @@
+# The dev_helper is only supposed to help me Test my work
+# Non of these Funtions should be used in the Main file in normal opperation
+
 import FreeCAD as App
 import random
 import json

@@ -1,9 +1,11 @@
 import FreeCAD as App
 from FreeCAD import Vector
 import math
-import helper
+import App.dev_helper as dev_helper
 from itertools import combinations
 from itertools import permutations
+
+from ChatGBTs_utils import print_dict
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
@@ -62,42 +64,93 @@ Knot1ID = {
 		"Type": "x"							,
 		"Angle":0							,
 		"n-fold_Symeterty":4				,
-		
+		"Angels": [1,2,3]
 	},
 	"P1": {
 		# "Direction": App.Vector(0,-2,5)	,
 		"Type": "x"							,
 		"Angle":0							,
-		"n-fold_Symeterty":4	
+		"n-fold_Symeterty":4				,
+		"Angels": [1,2,3]
 	},
 	"P2": {
 		# "Direction": App.Vector(2,-5,15)	,
 		"Type": "x"							,
 		"Angle":0							,
-		"n-fold_Symeterty":4	
+		"n-fold_Symeterty":4				,
+		"Angels": [1,2,3]
 	}
 }
 
-def getAngleKnotP(Knot,n,m,deg=True):
+def arraySum(A): # Move to utils
+	sum = 0
+	for i in A:
+		sum = i + sum
+	return sum
+
+def isValidKnot(K)->bool: 
+	pass
+
+def updateKnot(K,Pn,data): #Functions as i intentended but i dont know why exactly
+	Profile = K[f"P{Pn}"]
+	Profile.update(data)
+	return K 
+
+# print_dict(Knot1)
+# Knot1 = updateKnot(Knot1,1,{"Type":"Wow"})
+# print_dict(Knot1)
+
+def getAngleKnotP(Knot,n,m,deg=True)->float:
 	Vn = Knot[f"P{n}"]["Direction"]
 	Vm = Knot[f"P{m}"]["Direction"]
 	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
 
 	if deg is True: # Is the function used in deg or rad mode
-		return [axis,math.degrees(alpha)]
+		return [math.degrees(alpha)]
 	else:
-		return [axis,alpha]
+		return [alpha]
 
 def FCtoKnot():
 	pass
 
+def KnotToAngleID(K):
+	L = len(K)
+	Combinations = list(combinations(range(L),2))
+	r = []
+	for i in range(L):
+		def myfilter(x,n=i):
+			if x[0] == n:
+				return True
+			else:
+				return False
+		Com = list(filter(myfilter,Combinations))
+		for C in Com:
+			alpha = getAngleKnotP(K,C[0],C[1])
+			r.append(alpha)
+	return r
+
+# print(KnotToAngleID(Knot1))
+
 def KnotToID(K):
-	print(len(K))
-	ID = list(permutations(range(len(K)),2))
-	print(ID)
-	pass
+	L = len(K)
+	Perm = list(permutations(range(L),2))
+	for i in range(L):
+		def myfilter(x,n=i):
+			if x[0] == n:
+				return True
+			else:
+				return False
+		Pe = list(filter(myfilter,Perm))
+		L = []
+		for C in Pe:
+			alpha = getAngleKnotP(K,C[0],C[1])
+			L.append(alpha)
+		updateKnot(K,i,{"Angles":L})
+		# print(L)
+		# print(Pe)
 
 KnotToID(Knot1)
+# print_dict(Knot1)
 
 def IDToKnot(ID):
 	pass
