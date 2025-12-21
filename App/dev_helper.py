@@ -103,8 +103,9 @@ def ReadKnotID(name,BASEPATH):
 	doc = App.getDocument(name)
 	mypart = doc.getObject("Part")
 	KnotID = mypart.KnotID
-	print(KnotID)
-	pass
+	# print(KnotID)
+	return KnotID
+
 
 def loadBASEPATH(dir="APP/myPC.json"):
 	with open(dir,"r") as f:
