@@ -4,6 +4,7 @@ import math
 import App.dev_helper as dev_helper
 from itertools import combinations
 from itertools import permutations
+import utils
 
 from ChatGBTs_utils import print_dict
 
@@ -58,6 +59,34 @@ Knot1 = {
 	}
 }
 
+Knot1WO = {
+	"P0": {
+		"Direction": App.Vector(1,2,5),
+		"Offset": App.Vector(0,0,0), # Z is always 0
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	"P1": {
+		"Direction": App.Vector(0,-2,5)	,
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	"P2": {
+		"Direction": App.Vector(2,-5,15),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	"P3": {
+		"Direction": App.Vector(2,-5,0),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	}
+}
+
 Knot1ID = {
 	"P0": {
 		# "Direction": App.Vector(1,2,5)	,
@@ -82,11 +111,6 @@ Knot1ID = {
 	}
 }
 
-def arraySum(A): # Move to utils
-	sum = 0
-	for i in A:
-		sum = i + sum
-	return sum
 
 def isValidKnot(K)->bool: 
 	pass
@@ -146,11 +170,12 @@ def KnotToID(K):
 			alpha = getAngleKnotP(K,C[0],C[1])
 			L.append(alpha)
 		updateKnot(K,i,{"Angles":L})
-		# print(L)
-		# print(Pe)
+	for Key in K:
+		K[Key].pop("Direction")
 
-KnotToID(Knot1)
-# print_dict(Knot1)
+Knot2 = dev_helper.LoadKnot(2)
+KnotToID(Knot2)
+print_dict(Knot2)
 
 def IDToKnot(ID):
 	pass

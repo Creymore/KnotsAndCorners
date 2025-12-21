@@ -5,3 +5,5 @@ __pycache__
 
 .vscode
 
+myPC.json
+#Stores the BASEPATH or direktir

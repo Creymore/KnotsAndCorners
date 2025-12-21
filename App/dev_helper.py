@@ -2,11 +2,13 @@
 # Non of these Funtions should be used in the Main file in normal opperation
 
 import FreeCAD as App
+import FreeCADGui as Gui
 import random
 import json
 from App.ChatGBTs_utils import print_dict
 from App.ChatGBTs_utils import convert_vectors
 from App.ChatGBTs_utils import convert_lists_to_vectors
+import utils
 
 def TransformKnot(Knot,axis,angle): # angle in deg
 	rot = App.Rotation(axis,angle)
@@ -33,7 +35,7 @@ def GenerateProfile(type="x",angle=0,sym=4):
 	}
 	return Profile
 
-def GenerateKnot(proflies=3,type="x",angle=0,sym=4):
+def GenerateKnot(proflies=5,type="x",angle=0,sym=4):
 	knot = {}
 	for i in range(proflies):
 		knot.update({f"P{i}" : GenerateProfile()})
@@ -79,18 +81,43 @@ def LoadKnot(n=0,dir="App\DummyKnots.json"):
 		except:
 			print(f"Knot{n} does not exsit")
 			return False
+		
+
+
+def GenerateDocTest(name,BASEPATH):
+	
+	doc = App.newDocument(name)
+	mypart = doc.addObject('App::Part','Part') # Somehow need to make it visibal
+	# Gui.getDocument(name).getObject("Part").Visibility = True
+	# mypart.addProperty("App::PropertyString", "ThePropertyName", "Subsection", "Description for tooltip")
+	mypart.addProperty("App::PropertyString", "KnotID", "KnotInformation", "This is the Knot ID")
+	mypart.KnotID = "Tesrt"
+	doc.recompute()
+
+	path = f"{BASEPATH}/{name}"
+	App.getDocument(name).saveAs(path)
+
+def ReadKnotID(name,BASEPATH):
+	path = f"{BASEPATH}/{name}.FCstd"
+	open(path)
+	doc = App.getDocument(name)
+	mypart = doc.getObject("Part")
+	KnotID = mypart.KnotID
+	print(KnotID)
+	pass
+
+def loadBASEPATH(dir="APP/myPC.json"):
+	with open(dir,"r") as f:
+		data = json.load(f)
+	return data
 
 if __name__ == "__main__" :
-	Knots = GenerateKnots(10)
-	SaveKnots(Knots)
-	# print_dict(Knots)
-	# Knot = GenerateKnots(n=2)
-	# Kp = GenerateKnotPair(Knot)
-	# print_dict(Kp[0])
-	# print_dict(Kp[1])
-	# print_dict(Knot)
-	# Knot = convert_vectors(Knot)
-	# print_dict(Knot)
-	# Knot = convert_lists_to_vectors(Knot)
-	# print_dict(Knot)
-	print_dict(LoadKnot(0))
+	
+	
+	myBASEPATH = loadBASEPATH()
+
+	myname = "TEST1"
+	GenerateDocTest(name=myname,BASEPATH=myBASEPATH)
+	ReadKnotID(name=myname,BASEPATH=myBASEPATH)
+
+	pass
