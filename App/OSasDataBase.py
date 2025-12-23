@@ -2,6 +2,7 @@ import FreeCAD as App
 import os
 import hashlib
 from utils import isFCfile
+import random
 
 from dev_helper import loadBASEPATH
 
@@ -26,34 +27,42 @@ Save
 
 #Check if the name already exist
 #Somehow give that info to the user about needing an diffrent name
-def Savefile(file,path):
+def SaveFCfile(file,path):
+
+    pass
+
+# Loads all Valid Knot files in a direktory/folder
+def LoadFCfiles(path):
 
     pass
 
 # The Function should check for Vaild Path DONE, Valid file formate DONE, Valid "Knot" in Part in file
 def ReadKnotID(path): # path of file
+    # print(f"Read{path}")
     if not os.path.exists(path): # check Valid Path
         return False
     if not isFCfile(path):
         return False
     doc = App.open(path)
-    mypart = doc.getObject("Part")
+    mypart = doc.getObject("Part") #Ideal case what if name is not "Part"
     KnotID = mypart.KnotID
     return KnotID
 
+# This function adds a file with the KnotID. Helper function for testing and devolpment
 def AddFileWithID(KnotID,path,name="DefaultKnotID"):
-    doc = App.newDocument(name)
+    initalname = f"R{str(random.randrange(0,100))}"
+    doc = App.newDocument(initalname)                   # The Work aroud initial name, Somehow if the function is run in a loop,
+                                                        # each file gets the KnotID of the first element
     mypart = doc.addObject('App::Part','Part')
     mypart.addProperty("App::PropertyString", "KnotID", "KnotInformation", "This is the Knot ID")
     mypart.KnotID = KnotID
     mypart.setEditorMode("KnotID",1) # 1 => Read only mode
-
+    # print(KnotID)
     doc.recompute()
     path = f"{path}/{name}"
-    App.getDocument(name).saveAs(path)
+    App.getDocument(initalname).saveAs(path)
+    App.closeDocument(initalname) # Important do not delete
     print(f"New default file was Created ad: {path}")
-
-
 
 #default for N is 10000 because 
 def findPos(KnotID,N=10000):
@@ -73,8 +82,10 @@ def SearchValidPaths(KnotID,BASEPATH,Mode="Save"): # Mode = "Save" => Valid path
     Pos = findPos(KnotID)
     path = f"{BASEPATH}/{Pos}"
     ValidPath = []
-    if not os.path.exists(path):
+    if not os.path.exists(path) and Mode == "Save":
         os.mkdir(path)
+    if not os.path.exists(path):
+        return(ValidPath)
     folders = os.listdir(path)
     for folder in folders:
         SubPath = f"{path}/{folder}"
@@ -104,23 +115,47 @@ def SearchValidPaths(KnotID,BASEPATH,Mode="Save"): # Mode = "Save" => Valid path
 def SaveKnotWithID(KnotID,BASEPATH): # BASEPATH is the "DataBase" path
     path = SearchValidPaths(KnotID,BASEPATH,Mode="Save")
     path = path[0]
-    print(path)
-    AddFileWithID(KnotID,path)
-
-            
-
+    # print(path)
+    # print(KnotID)
+    AddFileWithID(KnotID=KnotID,path=path)
+    return path
 
 
 def LoadKnotID(KnotID,BASEPATH):
 
     pass
 
+
 if __name__ == "__main__":
+    def test(BASEPATH):
+        test1 = "String"
+        # AddFileWithID(test1,BASEPATH,name="test1")
+        SaveKnotWithID(test1,BASEPATH)
+        test2 = f"fString"
+        # AddFileWithID(test2,BASEPATH,name="test2")
+        SaveKnotWithID(test2,BASEPATH)
+        i = 10
+        test3 = f"fStringi{i}"
+        # AddFileWithID(test3,BASEPATH,name="test3")
+        SaveKnotWithID(test3,BASEPATH)
+
+        print(SearchValidPaths(test1,BASEPATH,"Load"))
+        print(SearchValidPaths(test2,BASEPATH,"Load"))
+        print(SearchValidPaths(test3,BASEPATH,"Load"))
+
+    def test2():
+        i=0
+        while i<1000:
+            name = f"Test{i}"
+            V1 = str(SaveKnotWithID(name,BASEPATH))
+            V2 = str(SearchValidPaths(name,BASEPATH,"Load")[0])
+            # print(V1)
+            # print(V2)
+            if V1 == V2:
+                print(f"Succes{i}")
+            i=i+1
+
     BASEPATH = loadBASEPATH()
     BASEPATH = f"{BASEPATH}/DataBase"
-    # print(ReadKnotID(f"{BASEPATH}/TEST1.FCStd"))
-    test = "Test3s"
-    # print(findPos(test))
-    # CheckDataBase(test,BASEPATH)
-    SaveKnotWithID(test,BASEPATH)
-    # print(SearchValidPaths(test,BASEPATH))
+    test(BASEPATH)
+    
