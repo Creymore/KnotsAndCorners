@@ -6,7 +6,6 @@ def arraySum(A): # Move to utils
 		sum = i + sum
 	return sum
 
-
 def isFCfile(path)->bool:
 	if str(path).endswith(".FCStd"):
 		return True

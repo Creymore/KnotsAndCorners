@@ -46,6 +46,7 @@ def ReadKnotID(path): # path of file
     doc = App.open(path)
     mypart = doc.getObject("Part") #Ideal case what if name is not "Part"
     KnotID = mypart.KnotID
+    App.closeDocument(doc.Name)# Closing documents, very important for performancance
     return KnotID
 
 # This function adds a file with the KnotID. Helper function for testing and devolpment
@@ -74,12 +75,12 @@ def findPos(KnotID,N=10000):
     # Pos = "01000" #to debug, test collition
     return Pos
 
-def SearchValidPaths(KnotID,BASEPATH,Mode="Save"): # Mode = "Save" => Valid path to save in | Mode = "Load" => Valid path to Load
+def SearchValidPaths(KnotID,BASEPATH,Mode="Save",N=10000): # Mode = "Save" => Valid path to save in | Mode = "Load" => Valid path to Load
     '''
-    Searches for a Valid path to load from
-    Searches or creates for a Valid path to Save in
+    Searches for a Valid path to load from Mode = "Load"
+    Searches or creates for a Valid path to Save in Mode = "Save"
     '''
-    Pos = findPos(KnotID)
+    Pos = findPos(KnotID,N)
     path = f"{BASEPATH}/{Pos}"
     ValidPath = []
     if not os.path.exists(path) and Mode == "Save":
@@ -96,6 +97,7 @@ def SearchValidPaths(KnotID,BASEPATH,Mode="Save"): # Mode = "Save" => Valid path
             filepath = f"{SubPath}/{file}"
             if ReadKnotID(filepath) == KnotID:
                 ValidPath.append(SubPath)
+                # return(ValidPath) #would make it faster 
         if len(files) == 0 and len(ValidPath) == 0 and Mode == "Save":
             ValidPath.append(SubPath)
     if len(ValidPath) == 0:
@@ -111,18 +113,27 @@ def SearchValidPaths(KnotID,BASEPATH,Mode="Save"): # Mode = "Save" => Valid path
         print("There is more then one Valid Path, Something is wrong")
     return(ValidPath)
 
-
 def SaveKnotWithID(KnotID,BASEPATH): # BASEPATH is the "DataBase" path
     path = SearchValidPaths(KnotID,BASEPATH,Mode="Save")
     path = path[0]
-    # print(path)
-    # print(KnotID)
-    AddFileWithID(KnotID=KnotID,path=path)
-    return path
+    file = "x"
+    SaveFCfile(file,path)
 
+    # AddFileWithID(KnotID=KnotID,path=path)
 
-def LoadKnotID(KnotID,BASEPATH):
+def LoadKnotID(KnotID,BASEPATHS):
+    paths = []
+    for BASEPATH in BASEPATHS:
+        path = SearchValidPaths(KnotID,BASEPATH)
+        paths.append(path)
+    
 
+def MigrationScript(TargetPath,InputPath,N):
+    '''
+    Recursivly searches through the InputPath for .FCstd files that classify as Knots
+    Then sorts them into the TargetPath "Data Base"
+    effectivly combining two "Data Bases" to one
+    '''
     pass
 
 
@@ -143,7 +154,7 @@ if __name__ == "__main__":
         print(SearchValidPaths(test2,BASEPATH,"Load"))
         print(SearchValidPaths(test3,BASEPATH,"Load"))
 
-    def test2():
+    def test2(BASEPATH):
         i=0
         while i<1000:
             name = f"Test{i}"
@@ -154,8 +165,27 @@ if __name__ == "__main__":
             if V1 == V2:
                 print(f"Succes{i}")
             i=i+1
+    
+    def CreateData(BASEPATH):
+        i = 0
+        while i < 10000:
+            print(i)
+            SaveKnotWithID(f"Test{i}",BASEPATH)
+            i = i+1
+
+    def test3(BASEPATH):
+        i = 0
+        while i < 1000:
+            print(i)
+            n = random.randrange(0,3000)
+            if i == 300:
+                print("Grr")
+            print(SearchValidPaths(f"Test{n}",BASEPATH))
+            i = i + 1
 
     BASEPATH = loadBASEPATH()
     BASEPATH = f"{BASEPATH}/DataBase"
-    test(BASEPATH)
+    print(SearchValidPaths("Test400",BASEPATH,Mode="Load"))
+    # CreateData(BASEPATH)
+    test3(BASEPATH)
     

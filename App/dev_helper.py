@@ -1,5 +1,9 @@
-# The dev_helper is only supposed to help me Test my work
-# Non of these Funtions should be used in the Main file in normal opperation
+
+'''
+The dev_helper is only supposed to help me Test my work
+Non of these Funtions should be used in the Main file in normal opperation
+Note to self: ALWAYS close Documents after modefing them with a function
+'''
 
 import FreeCAD as App
 import FreeCADGui as Gui
