@@ -9,6 +9,7 @@ from App.ChatGBTs_utils import print_dict
 from App.ChatGBTs_utils import convert_vectors
 from App.ChatGBTs_utils import convert_lists_to_vectors
 import utils
+import os
 
 def TransformKnot(Knot,axis,angle): # angle in deg
 	rot = App.Rotation(axis,angle)
@@ -84,14 +85,14 @@ def LoadKnot(n=0,dir="App\DummyKnots.json"):
 		
 
 
-def GenerateDocTest(name,BASEPATH):
+def GenerateDocTest(name,BASEPATH,KnotID):
 	
 	doc = App.newDocument(name)
 	mypart = doc.addObject('App::Part','Part') # Somehow need to make it visibal
 	# Gui.getDocument(name).getObject("Part").Visibility = True
 	# mypart.addProperty("App::PropertyString", "ThePropertyName", "Subsection", "Description for tooltip")
 	mypart.addProperty("App::PropertyString", "KnotID", "KnotInformation", "This is the Knot ID")
-	mypart.KnotID = "Tesrt"
+	mypart.KnotID = KnotID
 	doc.recompute()
 
 	path = f"{BASEPATH}/{name}"
@@ -99,7 +100,10 @@ def GenerateDocTest(name,BASEPATH):
 
 def ReadKnotID(name,BASEPATH):
 	path = f"{BASEPATH}/{name}.FCstd"
-	open(path)
+	if os.path.exists(path):
+		open(path)
+	else:
+		return False
 	doc = App.getDocument(name)
 	mypart = doc.getObject("Part")
 	KnotID = mypart.KnotID
@@ -116,9 +120,10 @@ if __name__ == "__main__" :
 	
 	
 	myBASEPATH = loadBASEPATH()
-
+	myBASEPATH = f"{myBASEPATH}/DataBase/09071/00001"
 	myname = "TEST1"
-	GenerateDocTest(name=myname,BASEPATH=myBASEPATH)
-	ReadKnotID(name=myname,BASEPATH=myBASEPATH)
+	myKnotID = "Test1"
+	GenerateDocTest(name=myname,BASEPATH=myBASEPATH,KnotID=myKnotID )
+	print(ReadKnotID(name=myname,BASEPATH=myBASEPATH))
 
 	pass
