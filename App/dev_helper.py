@@ -6,14 +6,16 @@ Note to self: ALWAYS close Documents after modefing them with a function
 '''
 
 import FreeCAD as App
-import FreeCADGui as Gui
+import FreeCADGui # Unusable for scripting Duh
 import random
 import json
-from App.ChatGBTs_utils import print_dict
-from App.ChatGBTs_utils import convert_vectors
-from App.ChatGBTs_utils import convert_lists_to_vectors
+from ChatGBTs_utils import print_dict
+from ChatGBTs_utils import convert_vectors
+from ChatGBTs_utils import convert_lists_to_vectors
 import utils
 import os
+import Draft #No worries it works, dispite of "Import "Draft" could not be resolved"
+# import FreeCADGui.Selection
 
 def TransformKnot(Knot,axis,angle): # angle in deg
 	rot = App.Rotation(axis,angle)
@@ -87,8 +89,6 @@ def LoadKnot(n=0,dir="App\DummyKnots.json"):
 			print(f"Knot{n} does not exsit")
 			return False
 		
-
-
 def GenerateDocTest(name,BASEPATH,KnotID):
 	
 	doc = App.newDocument(name)
@@ -120,14 +120,77 @@ def loadBASEPATH(dir="APP/myPC.json"):
 		data = json.load(f)
 	return data
 
+def MakeLine(Vector):
+	pl = App.Placement()
+	pl.Rotation.Q = (0.0, 0.0, 0.0, 1.0)
+	pl.Base = App.Vector(0.0, 0.0, 0.0)
+	points = [App.Vector(0.0, 0.0, 0.0), Vector]
+	line = Draft.make_wire(points, placement=pl, closed=False, face=True, support=None)
+	return line
+
+def makeBody(doc):
+	Body=doc.addObject('PartDesign::Body','Body')
+	return Body
+
+#https://wiki.freecad.org/index.php?title=Scripted_objects_with_attachment&section=5
+def AktivateAttachment(obj): # Why did this take so laong :( 
+	obj.addExtension('Part::AttachExtensionPython')
+
+
+def AttachBody(Body,edge):
+	AktivateAttachment(Body)
+	Body.AttachmentSupport = edge
+	Body.MapMode = 'NormalToEdge'
+	Body.MapPathParameter = 1.0
+
+	pass
+
+'''
+Idea: get the information, what Edge a Body/Part is attached to.
+>>> # doc = App.getDocument("Unnamed")
+>>> # obj = doc.getObject("Box")
+>>> # shp = obj.Shape
+>>> # sub = obj.getSubObject("Edge10")
+sub.CenterOfGravity
+
+>>> # doc = App.getDocument("Unnamed")
+>>> # obj = doc.getObject("Body001")
+obj.Placement
+
+sub.CenterOfGravity = obj.Placement
+'''
+
+def GenerateTestKnotFile(name,path):
+	doc = App.newDocument(name)
+	part = doc.addObject('App::Part','Knot')
+	part.addObject(doc.addObject('App::DocumentObjectGroup','Directions'))
+	for i in range(3):
+		V = GenerateVector()
+		line = MakeLine(V)
+		part.addObject(line)
+		body = makeBody(doc)
+		part.addObject(body)
+		AttachBody(body,[line,'Edge1'])
+
+
+
+	
+
+	path = f"{path}/{name}"
+	doc.saveAs(path)
+	App.closeDocument(doc.Name)
+
 if __name__ == "__main__" :
 	
 	
 	myBASEPATH = loadBASEPATH()
-	myBASEPATH = f"{myBASEPATH}/DataBase/09071/00001"
+	# myBASEPATH = f"{myBASEPATH}/DataBase/09071/00001"
 	myname = "TEST1"
 	myKnotID = "Test1"
-	GenerateDocTest(name=myname,BASEPATH=myBASEPATH,KnotID=myKnotID )
-	print(ReadKnotID(name=myname,BASEPATH=myBASEPATH))
+	# GenerateDocTest(name=myname,BASEPATH=myBASEPATH,KnotID=myKnotID )
+	# print(ReadKnotID(name=myname,BASEPATH=myBASEPATH))
+	# print(myBASEPATH)
+	# GenerateTestKnotFile("test1",myBASEPATH)
+
 
 	pass

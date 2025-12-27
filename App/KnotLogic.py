@@ -1,10 +1,10 @@
 import FreeCAD as App
 from FreeCAD import Vector
 import math
-import App.dev_helper as dev_helper
+import dev_helper as dev_helper
 from itertools import combinations
 from itertools import permutations
-import utils
+from utils import arraySum
 
 from ChatGBTs_utils import print_dict
 
@@ -31,6 +31,7 @@ B2 = rot.multVec(A2)
 # print(A1.getAngle(A2))
 
 #Data structure
+# Should the Knot data be turned into a List ??? Probably better
 
 Knot1 = {
 	"P0": {
@@ -52,7 +53,7 @@ Knot1 = {
 		"n-fold_Symeterty":4	
 	},
 	"P3": {
-		"Direction": App.Vector(2,-5,0),
+		"Direction": App.Vector(2,5,0),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
@@ -120,19 +121,46 @@ def updateKnot(K,Pn,data): #Functions as i intentended but i dont know why exact
 	Profile.update(data)
 	return K 
 
-# print_dict(Knot1)
-# Knot1 = updateKnot(Knot1,1,{"Type":"Wow"})
-# print_dict(Knot1)
-
 def getAngleKnotP(Knot,n,m,deg=True)->float:
 	Vn = Knot[f"P{n}"]["Direction"]
 	Vm = Knot[f"P{m}"]["Direction"]
 	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
 
 	if deg is True: # Is the function used in deg or rad mode
-		return [math.degrees(alpha)]
+		return math.degrees(alpha)
 	else:
-		return [alpha]
+		return alpha
+	
+def DictToList(K):
+	List = []
+	for item in K.items():
+		List.append(item[1])
+	return List
+
+def ListToDict(L):
+	Dict = {}
+	for i in range(len(L)):
+		Dict.update({f"P{i}":L[i]})
+	return Dict
+
+def SortDirections(K):
+	# Perm = list(permutations(range(len(K)),2))
+	for i in range(len(K)):
+		Angels = []
+		AngelSum = 0
+		for n in range(len(K)):
+			alpha = getAngleKnotP(K,i,n)
+			Angels.append(alpha)
+			AngelSum = AngelSum + alpha
+		updateKnot(K,i,{"AngleSum":AngelSum})
+	def AngleSort(S):
+		return S["AngleSum"]
+	KL = DictToList(K)
+	KL.sort(key=AngleSort)
+	return ListToDict(KL)
+
+print_dict(SortDirections(Knot1))
+
 
 def FCtoKnot():
 	pass
@@ -173,9 +201,9 @@ def KnotToID(K):
 	for Key in K:
 		K[Key].pop("Direction")
 
-Knot2 = dev_helper.LoadKnot(2)
-KnotToID(Knot2)
-print_dict(Knot2)
+# Knot2 = dev_helper.LoadKnot(2)
+# KnotToID(Knot2)
+# print_dict(Knot2)
 
 def IDToKnot(ID):
 	pass
@@ -198,7 +226,13 @@ def IsOppesite(V1,V2,tol = 1e-6):
 		return False
 
 
+
 def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
+	'''
+	Find Axis Angle, Returns the Axis and Angle Transformation, That A1 and B1 get Transformend into A2 and B2 around the Origin(0,0,0)
+	A1 transforms into A2
+	B1 transforms into B2
+	'''
 	A1,B1,A2,B2 = A1.normalize(),B1.normalize(),A2.normalize(),B2.normalize()
 	if not IsTransformend(A1,B1,A2,B2):
 		return False
