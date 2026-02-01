@@ -8,7 +8,7 @@ Load File
 import FreeCAD as App
 import os
 import hashlib
-from utils import isFCfile
+from App.utils.utils import isFCfile
 import random
 
 from dev_helper import loadBASEPATH

@@ -44,23 +44,30 @@ def convert_lists_to_vectors(data):
     else:
         return data
 
+def print_list_of_dicts(data, indent=2):
+    """
+    Pretty-print a list of dictionaries with arbitrary value types.
 
+    This function is intended for structures like:
+        list[dict[str, Any]]
 
-def globalPlacement(obj):
-    P = obj.Placement
-    parent = obj.getParentGeoFeatureGroup()
+    Each dictionary is printed as a block, with one key–value pair per line.
+    Values may be basic Python types or objects such as FreeCAD's App.Vector.
 
-    while parent:
-        P = parent.Placement * P
-        parent = parent.getParentGeoFeatureGroup()
+    Parameters
+    ----------
+    data : list[dict]
+        A list of dictionaries to print.
+    indent : int, optional
+        Number of spaces used to indent dictionary entries.
+        Default is 2.
 
-    return P
-
-def transformPoint(point, obj_from, obj_to):
-    P_from = globalPlacement(obj_from)
-    P_to   = globalPlacement(obj_to)
-
-    return P_to.inverse().multVec(
-        P_from.multVec(point)
-    )
-
+    Returns
+    -------
+    None
+        The function prints the formatted output to stdout.
+    """
+    for i, item in enumerate(data):
+        print(f"Item {i}:")
+        for key, value in item.items():
+            print(" " * indent + f"{key}: {value}")

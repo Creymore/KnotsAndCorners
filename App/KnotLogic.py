@@ -13,9 +13,9 @@ import math
 import dev_helper as dev_helper
 from itertools import combinations
 from itertools import permutations
-from utils import arraySum
 
-from ChatGBTs_utils import print_dict
+from utils.ChatGBTs_utils import print_dict
+from utils.ChatGBTs_utils import print_list_of_dicts
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
@@ -63,6 +63,33 @@ Knot1 = [
 	},
 	{
 		"Direction": App.Vector(2,5,0),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	}
+]
+
+Knot2 = [
+	{
+		"Direction": App.Vector(2,-5,15)	,
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	{
+		"Direction": App.Vector(1,2,5)	,
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	{
+		"Direction": App.Vector(2,5,0),
+		"Type": "x"				,
+		"Angle":0				,
+		"n-fold_Symeterty":4	
+	},
+	{
+		"Direction": App.Vector(0,-2,5),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
@@ -163,14 +190,13 @@ def ListToDict(L): # Not needed Blongs in utlis Anyway
 		Dict.update({f"P{i}":L[i]})
 	return Dict
 
-def SortDirections(K):
+def KnotToID(K,tol = 1e-6):
 	# Perm = list(permutations(range(len(K)),2))
 	for i in range(len(K)):
-		# Angels = []
 		AngelSum = 0
 		for n in range(len(K)):
 			alpha = getAngleKnotP(K,i,n)
-			# Angels.append(alpha)
+
 			AngelSum = AngelSum + alpha
 		updateKnot(K,i,{"AngleSum":AngelSum})
 	def AngleSort(S):
@@ -179,7 +205,37 @@ def SortDirections(K):
 	removeKnotData2(K,"AngleSum")
 	return K
 
-# print(SortDirections(Knot1))
+#This does not account for an offset yet :(
+def KnotToID(K,tol = 1e-6):
+	"""
+	Docstring for KnotToID2
+	Generates an Oriantation indipendet idenfifer for Knot
+	
+	:param K: Knot
+	:param tol: toleranz
+	"""
+	for i in range(len(K)):
+		Angels = []									#Not Sorting
+		AngelSum = 0
+		for n in range(len(K)):
+			alpha = getAngleKnotP(K,i,n)
+			if alpha > tol:							#Not Sorting
+				Angels.append(alpha)				#Not Sorting
+			AngelSum = AngelSum + alpha
+		updateKnot(K,i,{"AngleSum":AngelSum})
+		Angels.sort()								#Not Sorting
+		updateKnot(K,i,{"Angels":Angels})			#Not Sorting
+	def AngleSort(S):
+		return S["AngleSum"]
+	K.sort(key=AngleSort)
+	removeKnotData2(K,"AngleSum")
+	removeKnotData2(K,"Direction")
+	return K
+
+print(Knot1 == Knot2)
+KnotToID(Knot1)
+KnotToID(Knot2)
+print(Knot1 == Knot2)
 
 def FCtoKnot():
 	pass
@@ -203,27 +259,6 @@ def KnotToAngleID(K):
 # Knot1 = SortDirections(Knot1)
 # print(KnotToAngleID(Knot1))
 
-def KnotToID(K):
-	L = len(K)
-	Perm = list(permutations(range(L),2))
-	for i in range(L):
-		def myfilter(x,n=i):
-			if x[0] == n:
-				return True
-			else:
-				return False
-		Pe = list(filter(myfilter,Perm))
-		L = []
-		for C in Pe:
-			alpha = getAngleKnotP(K,C[0],C[1])
-			L.append(alpha)
-		updateKnot(K,i,{"Angles":L})
-	removeKnotData2(K,"Direction")
-	return(K)
-
-Knot2 = dev_helper.LoadKnot(2)
-KnotToID(Knot2)
-print(Knot2)
 
 def IDToKnot(ID):
 	pass

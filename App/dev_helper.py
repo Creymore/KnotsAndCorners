@@ -6,13 +6,11 @@ Note to self: ALWAYS close Documents after modefing them with a function
 '''
 
 import FreeCAD as App
-import FreeCADGui # Unusable for scripting Duh
 import random
 import json
-from ChatGBTs_utils import print_dict
-from ChatGBTs_utils import convert_vectors
-from ChatGBTs_utils import convert_lists_to_vectors
-import utils
+from utils.ChatGBTs_utils import print_dict
+from utils.ChatGBTs_utils import convert_vectors
+from utils.ChatGBTs_utils import convert_lists_to_vectors
 import os
 import Draft #No worries it works, dispite of "Import "Draft" could not be resolved"
 # import FreeCADGui.Selection
@@ -24,9 +22,9 @@ def TransformKnot(Knot,axis,angle): # angle in deg
 	rot = App.Rotation(axis,angle)
 	n = 0
 	while n < len(Knot): #Would be more elegant with a for Loop but i dont know how
-		V = Knot[f"P{n}"]["Direction"]
+		V = Knot[n]["Direction"]
 		V = rot.multVec(V)
-		Knot[f"P{n}"].update({"Direction":V})
+		Knot[n].update({"Direction":V})
 		n = n+1
 	return(Knot)
 
