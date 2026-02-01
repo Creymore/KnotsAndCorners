@@ -125,17 +125,23 @@ Knot1ID = [
 def isValidKnot(K)->bool: 
 	pass
 
-def updateKnot(K,Pn,data): #Functions as i intentended but i dont know why exactly
-	Profile = K[f"P{Pn}"]
+def updateKnot(K,Pn,data): # data = {"name":"value/Stuff"}
+	Profile = K[Pn]
 	Profile.update(data)
 	return K
 
-updateKnot(Knot1,1,{"Type":"y"})
-print(Knot1)
+def removeKnotData(K,Pn,data): # data = "String"
+	Profile = K[Pn]
+	Profile.pop(data)
+	return K
+
+def removeKnotData2(K,data): # data = "String"
+	for Knot in K:
+		Knot.pop(data)
 
 def getAngleKnotP(Knot,n,m,deg=True)->float:
-	Vn = Knot[f"P{n}"]["Direction"]
-	Vm = Knot[f"P{m}"]["Direction"]
+	Vn = Knot[n]["Direction"]
+	Vm = Knot[m]["Direction"]
 	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
 
 	if deg is True: # Is the function used in deg or rad mode
@@ -143,13 +149,15 @@ def getAngleKnotP(Knot,n,m,deg=True)->float:
 	else:
 		return alpha
 	
-def DictToList(K):
+# print(getAngleKnotP(Knot1,0,2))
+	
+def DictToList(K): # Not needed Blongs in utlis Anyway
 	List = []
 	for item in K.items():
 		List.append(item[1])
 	return List
 
-def ListToDict(L):
+def ListToDict(L): # Not needed Blongs in utlis Anyway
 	Dict = {}
 	for i in range(len(L)):
 		Dict.update({f"P{i}":L[i]})
@@ -158,21 +166,20 @@ def ListToDict(L):
 def SortDirections(K):
 	# Perm = list(permutations(range(len(K)),2))
 	for i in range(len(K)):
-		Angels = []
+		# Angels = []
 		AngelSum = 0
 		for n in range(len(K)):
 			alpha = getAngleKnotP(K,i,n)
-			Angels.append(alpha)
+			# Angels.append(alpha)
 			AngelSum = AngelSum + alpha
 		updateKnot(K,i,{"AngleSum":AngelSum})
 	def AngleSort(S):
 		return S["AngleSum"]
-	KL = DictToList(K)
-	KL.sort(key=AngleSort)
-	return ListToDict(KL)
+	K.sort(key=AngleSort)
+	removeKnotData2(K,"AngleSum")
+	return K
 
-print_dict(SortDirections(Knot1))
-
+# print(SortDirections(Knot1))
 
 def FCtoKnot():
 	pass
@@ -193,6 +200,7 @@ def KnotToAngleID(K):
 			r.append(alpha)
 	return r
 
+# Knot1 = SortDirections(Knot1)
 # print(KnotToAngleID(Knot1))
 
 def KnotToID(K):
@@ -210,16 +218,18 @@ def KnotToID(K):
 			alpha = getAngleKnotP(K,C[0],C[1])
 			L.append(alpha)
 		updateKnot(K,i,{"Angles":L})
-	for Key in K:
-		K[Key].pop("Direction")
+	removeKnotData2(K,"Direction")
+	return(K)
 
-# Knot2 = dev_helper.LoadKnot(2)
-# KnotToID(Knot2)
-# print_dict(Knot2)
+Knot2 = dev_helper.LoadKnot(2)
+KnotToID(Knot2)
+print(Knot2)
 
 def IDToKnot(ID):
 	pass
 
+#----------------------------------------------------------------------------------------------------------------------------------
+#Find Axis and Angle
 
 def IsTransformend(A1,B1,A2,B2,tol = 1e-6):
 	a = A1.getAngle(A2)
