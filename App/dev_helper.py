@@ -17,6 +17,9 @@ import os
 import Draft #No worries it works, dispite of "Import "Draft" could not be resolved"
 # import FreeCADGui.Selection
 
+#----------------------------------------------------------------------------------------------------------------
+
+
 def TransformKnot(Knot,axis,angle): # angle in deg
 	rot = App.Rotation(axis,angle)
 	n = 0
@@ -43,10 +46,13 @@ def GenerateProfile(type="x",angle=0,sym=4):
 	return Profile
 
 def GenerateKnot(proflies=5,type="x",angle=0,sym=4):
-	knot = {}
+	knot = []
 	for i in range(proflies):
-		knot.update({f"P{i}" : GenerateProfile()})
+		knot.append(GenerateProfile())
 	return knot
+
+# K = GenerateKnot()
+# print(K)
 
 def GenerateKnots(n=2):
 	knots = {}
@@ -88,6 +94,8 @@ def LoadKnot(n=0,dir="App\DummyKnots.json"):
 		except:
 			print(f"Knot{n} does not exsit")
 			return False
+		
+#-------------------------------------------------------------------------------------------------
 		
 def GenerateDocTest(name,BASEPATH,KnotID):
 	
@@ -166,6 +174,8 @@ def GenerateTestKnotFile(name,path):
 	part.addObject(doc.addObject('App::DocumentObjectGroup','Directions'))
 	for i in range(3):
 		V = GenerateVector()
+		V.normalize()
+		V = V * 100
 		line = MakeLine(V)
 		part.addObject(line)
 		body = makeBody(doc)
@@ -175,15 +185,43 @@ def GenerateTestKnotFile(name,path):
 
 
 	
-
+	doc.recompute()
 	path = f"{path}/{name}"
 	doc.saveAs(path)
 	App.closeDocument(doc.Name)
 
+'''
+part.Placement.Base
+Vector (100.00000000000001, 100.00000000000001, 0.0)
+==
+# doc = App.getDocument("AttachmentSearcherTest")
+>>> # obj = doc.getObject("Line002")
+>>> # shp = obj.Shape
+>>> # sub = obj.getSubObject("Vertex2")
+>>> ### End command Std_SendToPythonConsole
+>>> sub.Point
+Vector (100.0, 100.0, 0.0)
+
+'''
+
+def PlaceNormalToEdge():
+
+	pass
+
+# Vertex and Obj(Part) must be placed in the Same Coordinate system
+def ProjectIntoPart(Vertex,Obj):
+	inv = Obj.Placement.inverse
+	Position = Vertex.Point
+	PositionLocal = inv.multVec(Position)
+	return PositionLocal
+
+
+
+
 if __name__ == "__main__" :
 	
 	
-	myBASEPATH = loadBASEPATH()
+	# myBASEPATH = loadBASEPATH()
 	# myBASEPATH = f"{myBASEPATH}/DataBase/09071/00001"
 	myname = "TEST1"
 	myKnotID = "Test1"
@@ -192,5 +230,9 @@ if __name__ == "__main__" :
 	# print(myBASEPATH)
 	# GenerateTestKnotFile("test1",myBASEPATH)
 
+	Knots = GenerateKnots(10)
+	SaveKnots(Knots)
+	K = LoadKnot(2)
+	print(K)
 
 	pass

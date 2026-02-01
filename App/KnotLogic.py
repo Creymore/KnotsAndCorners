@@ -1,3 +1,12 @@
+'''
+Logic To Generate Knot IDs
+Solve for Axis Angel Rotation
+Test Fit Logic TODO
+Solve All resuts for Axis Angle Rotation TODO
+
+'''
+
+
 import FreeCAD as App
 from FreeCAD import Vector
 import math
@@ -33,84 +42,84 @@ B2 = rot.multVec(A2)
 #Data structure
 # Should the Knot data be turned into a List ??? Probably better
 
-Knot1 = {
-	"P0": {
+Knot1 = [
+	{
 		"Direction": App.Vector(1,2,5)	,
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P1": {
+	{
 		"Direction": App.Vector(0,-2,5)	,
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P2": {
+	{
 		"Direction": App.Vector(2,-5,15),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P3": {
+	{
 		"Direction": App.Vector(2,5,0),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	}
-}
+]
 
-Knot1WO = {
-	"P0": {
+Knot1WO = [
+	{
 		"Direction": App.Vector(1,2,5),
 		"Offset": App.Vector(0,0,0), # Z is always 0
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P1": {
+	{
 		"Direction": App.Vector(0,-2,5)	,
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P2": {
+	{
 		"Direction": App.Vector(2,-5,15),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	},
-	"P3": {
+	{
 		"Direction": App.Vector(2,-5,0),
 		"Type": "x"				,
 		"Angle":0				,
 		"n-fold_Symeterty":4	
 	}
-}
+]
 
-Knot1ID = {
-	"P0": {
+Knot1ID = [
+	{
 		# "Direction": App.Vector(1,2,5)	,
 		"Type": "x"							,
 		"Angle":0							,
 		"n-fold_Symeterty":4				,
 		"Angels": [1,2,3]
 	},
-	"P1": {
+	{
 		# "Direction": App.Vector(0,-2,5)	,
 		"Type": "x"							,
 		"Angle":0							,
 		"n-fold_Symeterty":4				,
 		"Angels": [1,2,3]
 	},
-	"P2": {
+	{
 		# "Direction": App.Vector(2,-5,15)	,
 		"Type": "x"							,
 		"Angle":0							,
 		"n-fold_Symeterty":4				,
 		"Angels": [1,2,3]
 	}
-}
+]
 
 
 def isValidKnot(K)->bool: 
@@ -119,7 +128,10 @@ def isValidKnot(K)->bool:
 def updateKnot(K,Pn,data): #Functions as i intentended but i dont know why exactly
 	Profile = K[f"P{Pn}"]
 	Profile.update(data)
-	return K 
+	return K
+
+updateKnot(Knot1,1,{"Type":"y"})
+print(Knot1)
 
 def getAngleKnotP(Knot,n,m,deg=True)->float:
 	Vn = Knot[f"P{n}"]["Direction"]

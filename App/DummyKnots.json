@@ -1,522 +1,522 @@
 {
-    "Knot0": {
-        "P0": {
+    "Knot0": [
+        {
             "Direction": [
-                54.0,
-                -71.0,
-                -23.0
+                -97.0,
+                20.0,
+                3.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                46.0,
-                -64.0,
-                -14.0
+                68.0,
+                -49.0,
+                0.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P2": {
+        {
             "Direction": [
-                -87.0,
-                66.0,
-                -41.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                -51.0,
-                -85.0,
-                22.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                -16.0,
-                28.0,
-                86.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        }
-    },
-    "Knot1": {
-        "P0": {
-            "Direction": [
-                74.0,
-                -75.0,
-                43.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P1": {
-            "Direction": [
-                47.0,
-                96.0,
-                -63.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                -95.0,
-                69.0,
-                -90.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                30.0,
-                -27.0,
-                -80.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                7.0,
-                -15.0,
-                -64.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        }
-    },
-    "Knot2": {
-        "P0": {
-            "Direction": [
-                76.0,
-                43.0,
-                -36.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P1": {
-            "Direction": [
-                -93.0,
-                -5.0,
+                -2.0,
+                -31.0,
                 20.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P2": {
+        {
             "Direction": [
-                -33.0,
-                -88.0,
-                -36.0
+                36.0,
+                75.0,
+                6.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P3": {
+        {
             "Direction": [
-                33.0,
-                -93.0,
-                97.0
+                47.0,
+                52.0,
+                12.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ],
+    "Knot1": [
+        {
+            "Direction": [
+                18.0,
+                -42.0,
+                51.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P4": {
+        {
             "Direction": [
-                -28.0,
+                -30.0,
                 -57.0,
-                -80.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        }
-    },
-    "Knot3": {
-        "P0": {
-            "Direction": [
-                -11.0,
-                17.0,
-                -87.0
+                10.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                15.0,
-                84.0,
-                91.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                -11.0,
-                -90.0,
-                -46.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                -55.0,
-                -8.0,
-                -93.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                -89.0,
-                -80.0,
-                -72.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        }
-    },
-    "Knot4": {
-        "P0": {
-            "Direction": [
-                94.0,
-                40.0,
-                -52.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P1": {
-            "Direction": [
-                79.0,
-                81.0,
-                -100.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                -98.0,
-                -21.0,
-                -60.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                11.0,
-                16.0,
-                -88.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                6.0,
-                33.0,
-                -92.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        }
-    },
-    "Knot5": {
-        "P0": {
-            "Direction": [
-                -78.0,
-                88.0,
+                -71.0,
+                -39.0,
                 -61.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                -5.0,
-                -14.0,
-                87.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                -97.0,
-                -97.0,
-                -62.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                59.0,
-                41.0,
-                -37.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                87.0,
-                -72.0,
+                -80.0,
+                1.0,
                 -3.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
-        }
-    },
-    "Knot6": {
-        "P0": {
-            "Direction": [
-                -31.0,
-                92.0,
-                64.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                46.0,
-                -62.0,
-                4.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                -31.0,
-                -30.0,
-                -87.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                -58.0,
-                85.0,
-                81.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                48.0,
-                42.0,
-                88.0
+                32.0,
+                8.0,
+                54.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         }
-    },
-    "Knot7": {
-        "P0": {
+    ],
+    "Knot2": [
+        {
             "Direction": [
-                97.0,
-                -90.0,
-                22.0
+                52.0,
+                -53.0,
+                57.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                -60.0,
-                40.0,
-                -93.0
+                -11.0,
+                80.0,
+                94.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P2": {
+        {
+            "Direction": [
+                50.0,
+                -34.0,
+                -40.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                6.0,
+                -48.0,
+                -24.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
             "Direction": [
                 -79.0,
-                24.0,
-                58.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                -61.0,
-                -65.0,
-                91.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                83.0,
-                17.0,
-                84.0
+                96.0,
+                66.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         }
-    },
-    "Knot8": {
-        "P0": {
+    ],
+    "Knot3": [
+        {
             "Direction": [
-                -57.0,
+                -23.0,
+                10.0,
+                -92.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -36.0,
+                79.0,
+                -43.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                92.0,
+                -36.0,
+                -36.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                13.0,
+                1.0,
+                93.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -5.0,
                 60.0,
-                83.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P1": {
-            "Direction": [
-                -85.0,
-                42.0,
-                -89.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P2": {
-            "Direction": [
-                28.0,
-                -42.0,
-                -100.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                65.0,
-                -37.0,
-                39.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                40.0,
-                -18.0,
-                -93.0
+                -78.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         }
-    },
-    "Knot9": {
-        "P0": {
+    ],
+    "Knot4": [
+        {
             "Direction": [
-                -29.0,
-                48.0,
+                -26.0,
+                60.0,
                 -9.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P1": {
+        {
             "Direction": [
-                -91.0,
-                98.0,
-                73.0
+                -1.0,
+                51.0,
+                -82.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         },
-        "P2": {
+        {
             "Direction": [
-                -36.0,
+                -64.0,
+                -29.0,
+                -8.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -87.0,
+                -21.0,
+                -46.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
                 43.0,
-                -86.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P3": {
-            "Direction": [
-                36.0,
-                8.0,
-                -75.0
-            ],
-            "Type": "x",
-            "Angle": 0,
-            "n-fold_Symeterty": 4
-        },
-        "P4": {
-            "Direction": [
-                55.0,
-                55.0,
-                70.0
+                -59.0,
+                -74.0
             ],
             "Type": "x",
             "Angle": 0,
             "n-fold_Symeterty": 4
         }
-    }
+    ],
+    "Knot5": [
+        {
+            "Direction": [
+                -54.0,
+                -58.0,
+                84.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -40.0,
+                38.0,
+                -66.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                64.0,
+                -50.0,
+                82.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -11.0,
+                15.0,
+                -56.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -96.0,
+                -17.0,
+                37.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ],
+    "Knot6": [
+        {
+            "Direction": [
+                68.0,
+                -44.0,
+                91.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                96.0,
+                -28.0,
+                -48.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                44.0,
+                -9.0,
+                -1.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                27.0,
+                -65.0,
+                -41.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                39.0,
+                -73.0,
+                55.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ],
+    "Knot7": [
+        {
+            "Direction": [
+                -74.0,
+                51.0,
+                -18.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -70.0,
+                -70.0,
+                -20.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -57.0,
+                57.0,
+                42.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                72.0,
+                -3.0,
+                41.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                90.0,
+                -82.0,
+                -41.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ],
+    "Knot8": [
+        {
+            "Direction": [
+                78.0,
+                -41.0,
+                29.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -78.0,
+                41.0,
+                -88.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -38.0,
+                89.0,
+                -10.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -89.0,
+                -85.0,
+                -55.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -81.0,
+                -38.0,
+                -86.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ],
+    "Knot9": [
+        {
+            "Direction": [
+                5.0,
+                -65.0,
+                -70.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                25.0,
+                -54.0,
+                99.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -36.0,
+                -18.0,
+                -44.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                -32.0,
+                -57.0,
+                93.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        },
+        {
+            "Direction": [
+                39.0,
+                40.0,
+                -68.0
+            ],
+            "Type": "x",
+            "Angle": 0,
+            "n-fold_Symeterty": 4
+        }
+    ]
 }

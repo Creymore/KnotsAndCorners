@@ -43,3 +43,24 @@ def convert_lists_to_vectors(data):
 
     else:
         return data
+
+
+
+def globalPlacement(obj):
+    P = obj.Placement
+    parent = obj.getParentGeoFeatureGroup()
+
+    while parent:
+        P = parent.Placement * P
+        parent = parent.getParentGeoFeatureGroup()
+
+    return P
+
+def transformPoint(point, obj_from, obj_to):
+    P_from = globalPlacement(obj_from)
+    P_to   = globalPlacement(obj_to)
+
+    return P_to.inverse().multVec(
+        P_from.multVec(point)
+    )
+
