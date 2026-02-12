@@ -1,11 +1,5 @@
 import math
 
-def arraySum(A):
-	sum = 0
-	for i in A:
-		sum = i + sum
-	return sum
-
 def isFCfile(path)->bool:
 	if str(path).endswith(".FCStd"):
 		return True

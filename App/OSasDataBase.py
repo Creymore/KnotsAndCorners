@@ -11,7 +11,7 @@ import hashlib
 from App.utils.utils import isFCfile
 import random
 
-from dev_helper import loadBASEPATH
+from App.dev_tools.dev_helper import loadBASEPATH
 
 
 '''

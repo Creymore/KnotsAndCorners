@@ -4,18 +4,37 @@ The dev_helper is only supposed to help me Test my work
 Non of these Funtions should be used in the Main file in normal opperation
 Note to self: ALWAYS close Documents after modefing them with a function
 '''
+############################### IMPORTS #####################################################
+from pathlib import Path
+import sys
+
+# Support running this file directly (python App/dev_tools/dev_helper.py)
+# and as a module inside the App package.
+if __package__ is None or __package__ == "":
+    project_root = Path(__file__).resolve().parents[2]
+    project_root_str = str(project_root)
+    if project_root_str not in sys.path:
+        sys.path.insert(0, project_root_str)
+    from App.utils.ChatGBTs_utils import (
+        print_dict,
+        convert_vectors_to_list,
+        convert_lists_to_vectors,
+    )
+else:
+    from ..utils.ChatGBTs_utils import (
+        print_dict,
+        convert_vectors_to_list,
+        convert_lists_to_vectors,
+    )
 
 import FreeCAD as App
 import random
 import json
-from utils.ChatGBTs_utils import print_dict
-from utils.ChatGBTs_utils import convert_vectors
-from utils.ChatGBTs_utils import convert_lists_to_vectors
 import os
 import Draft #No worries it works, dispite of "Import "Draft" could not be resolved"
 # import FreeCADGui.Selection
 
-#----------------------------------------------------------------------------------------------------------------
+###########################################################################################
 
 
 def TransformKnot(Knot,axis,angle): # angle in deg
@@ -76,13 +95,13 @@ def VecArrayToFcVec(V):
 	v = App.Vector(V[0],V[1],V[2])
 	return v
 
-def SaveKnots(knots,dir="App/DummyKnots.json"):
-	knots = convert_vectors(knots) # Somehow the FreeCAD Json does not like FreeCAD Vector Objects https://github.com/FreeCAD/FreeCAD/issues/25566
+def SaveKnots(knots,dir="App/dev_tools/DummyKnots.json"):
+	knots = convert_vectors_to_list(knots) # Somehow the FreeCAD Json does not like FreeCAD Vector Objects https://github.com/FreeCAD/FreeCAD/issues/25566
 	jknots = json.dumps(knots,indent=4)
 	with open(dir,"w") as f:
 		f.write(jknots)
 
-def LoadKnot(n=0,dir="App\DummyKnots.json"):
+def LoadKnot(n=0,dir="App\dev_tools\DummyKnots.json"):
 	with open(dir,"r") as f:
 		data = json.load(f)
 		try:
@@ -229,6 +248,7 @@ if __name__ == "__main__" :
 	# GenerateTestKnotFile("test1",myBASEPATH)
 
 	Knots = GenerateKnots(10)
+	# print(Knots[0])
 	SaveKnots(Knots)
 	K = LoadKnot(2)
 	print(K)

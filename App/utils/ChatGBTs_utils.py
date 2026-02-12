@@ -12,14 +12,14 @@ def print_dict(d, indent=0):
         else:
             print(" " * (indent + 4) + str(value))
 
-def convert_vectors(data):
+def convert_vectors_to_list(data):
     """
     Recursively convert App.Vector(x, y, z) to [x, y, z] in any nested structure.
     """
     if isinstance(data, dict):
-        return {k: convert_vectors(v) for k, v in data.items()}
+        return {k: convert_vectors_to_list(v) for k, v in data.items()}
     elif isinstance(data, (list, tuple)):
-        return [convert_vectors(v) for v in data]
+        return [convert_vectors_to_list(v) for v in data]
     elif hasattr(data, "x") and hasattr(data, "y") and hasattr(data, "z"):
         # likely an App.Vector
         return [data.x, data.y, data.z]
@@ -44,7 +44,48 @@ def convert_lists_to_vectors(data):
     else:
         return data
 
-def print_list_of_dicts(data, indent=2):
+def vector_to_list(obj):
+    """
+    Recursively convert all App.Vector instances inside a data structure
+    into plain Python lists [x, y, z].
+    """
+
+    # Case 1: Direct Vector
+    if isinstance(obj, App.Vector):
+        return [obj.x, obj.y, obj.z]
+
+    # Case 2: List
+    elif isinstance(obj, list):
+        return [vector_to_list(item) for item in obj]
+
+    # Case 3: Tuple
+    elif isinstance(obj, tuple):
+        return tuple(vector_to_list(item) for item in obj)
+
+    # Case 4: Set
+    elif isinstance(obj, set):
+        return {vector_to_list(item) for item in obj}
+
+    # Case 5: Dict (convert keys and values)
+    elif isinstance(obj, dict):
+        return {
+            vector_to_list(key): vector_to_list(value)
+            for key, value in obj.items()
+        }
+
+    # Case 6: Custom objects
+    elif hasattr(obj, "__dict__"):
+        new_obj = obj.__class__.__new__(obj.__class__)
+        for attr, value in obj.__dict__.items():
+            setattr(new_obj, attr, vector_to_list(value))
+        return new_obj
+
+    # Default: return unchanged
+    else:
+        return obj
+
+
+def print_list(data, indent=2):
     """
     Pretty-print a list of dictionaries with arbitrary value types.
 

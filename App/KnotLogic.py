@@ -5,17 +5,33 @@ Test Fit Logic TODO
 Solve All resuts for Axis Angle Rotation TODO
 
 '''
+################################ IMPORT ####################################################
+from pathlib import Path
+import sys
 
-
+# Support running this file directly (python App/dev_tools/dev_helper.py)
+# and as a module inside the App package.
+if __package__ is None or __package__ == "":
+    project_root = Path(__file__).resolve().parents[2]
+    project_root_str = str(project_root)
+    if project_root_str not in sys.path:
+        sys.path.insert(0, project_root_str)
+    from utils.ChatGBTs_utils import (
+        print_dict,
+        print_list,
+    )
+else:
+    from utils.ChatGBTs_utils import (
+        print_dict,
+        print_list,
+    )
 import FreeCAD as App
 from FreeCAD import Vector
 import math
-import dev_helper as dev_helper
 from itertools import combinations
 from itertools import permutations
 
-from utils.ChatGBTs_utils import print_dict
-from utils.ChatGBTs_utils import print_list_of_dicts
+##############################################################################################
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
