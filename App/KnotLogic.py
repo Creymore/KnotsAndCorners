@@ -206,7 +206,7 @@ def ListToDict(L): # Not needed Blongs in utlis Anyway
 		Dict.update({f"P{i}":L[i]})
 	return Dict
 
-def KnotToID(K,tol = 1e-6):
+def KnotToID1(K,tol = 1e-6):
 	# Perm = list(permutations(range(len(K)),2))
 	for i in range(len(K)):
 		AngelSum = 0
@@ -252,6 +252,7 @@ print(Knot1 == Knot2)
 KnotToID(Knot1)
 KnotToID(Knot2)
 print(Knot1 == Knot2)
+print_list(Knot1)
 
 def FCtoKnot():
 	pass
