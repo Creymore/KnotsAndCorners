@@ -16,13 +16,13 @@ if __package__ is None or __package__ == "":
     if project_root_str not in sys.path:
         sys.path.insert(0, project_root_str)
     from App.utils.ChatGBTs_utils import (
-        print_dict,
+        print_list,
         convert_vectors_to_list,
         convert_lists_to_vectors,
     )
 else:
     from ..utils.ChatGBTs_utils import (
-        print_dict,
+        print_list,
         convert_vectors_to_list,
         convert_lists_to_vectors,
     )
@@ -57,7 +57,7 @@ def GenerateProfile(type="x",angle=0,sym=4):
 	Profile = {
 		"Direction": GenerateVector(),
 		"Type": type,
-		"Angle":angle,
+		"Rotation":angle,
 		"n-fold_Symeterty":sym
 	}
 	return Profile

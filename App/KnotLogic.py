@@ -2,32 +2,33 @@
 Logic To Generate Knot IDs
 Solve for Axis Angel Rotation
 Test Fit Logic TODO
-Solve All resuts for Axis Angle Rotation TODO
+Solve All resuts for Axis Rotation Rotation TODO
 
 '''
 ################################ IMPORT ####################################################
 from pathlib import Path
 import sys
 
-# Support running this file directly (python App/dev_tools/dev_helper.py)
+# Support running this file directly (python App/KnotLogic.py)
 # and as a module inside the App package.
 if __package__ is None or __package__ == "":
-    project_root = Path(__file__).resolve().parents[2]
+    project_root = Path(__file__).resolve().parents[1]
     project_root_str = str(project_root)
     if project_root_str not in sys.path:
         sys.path.insert(0, project_root_str)
-    from utils.ChatGBTs_utils import (
-        print_dict,
+    from App.utils.ChatGBTs_utils import (
+        print_list,
         print_list,
     )
 else:
-    from utils.ChatGBTs_utils import (
-        print_dict,
+    from .utils.ChatGBTs_utils import (
+        print_list,
         print_list,
     )
 import FreeCAD as App
 from FreeCAD import Vector
 import math
+import copy
 from itertools import combinations
 from itertools import permutations
 
@@ -35,18 +36,19 @@ from itertools import permutations
 
 # https://freecad.github.io/SourceDoc/d1/d13/classBase_1_1Vector3.html#a24f91e91499245ab4282c6d0d0b7630c
 
-A1 = App.Vector(1,2,3)
-A2 = App.Vector(12,3,64)
+# A1 = App.Vector(1,2,3)
+# A2 = App.Vector(12,3,64)
 
-axis = App.Vector(112,3,1)
-# axis = axis*3
-alpha = 10
-alpha = math.degrees(alpha)
+# axis = App.Vector(112,3,1)
+# # axis = axis*3
+# alpha = 10
+# alpha = math.degrees(alpha)
 
-rot = App.Rotation(axis, alpha)
-B1 = rot.multVec(A1)
-B2 = rot.multVec(A2)
+# rot = App.Rotation(axis, alpha)
+# B1 = rot.multVec(A1)
+# B2 = rot.multVec(A2)
 
+# print(A1.Length)
 # print(A1)
 # print(A2)
 # print(axis)
@@ -61,26 +63,30 @@ B2 = rot.multVec(A2)
 Knot1 = [
 	{
 		"Direction": App.Vector(1,2,5)	,
+		"Offset": App.Vector(10,0,0),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":10				, #Should this be just the direction of the X or Y Axis of the Body
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(0,-2,5)	,
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":-20				,
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(2,-5,15),
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":-1055				,
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(2,5,0),
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":322				,
 		"n-fold_Symeterty":4	
 	}
 ]
@@ -89,83 +95,31 @@ Knot2 = [
 	{
 		"Direction": App.Vector(2,-5,15)	,
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":0				,
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(1,2,5)	,
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":0				,
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(2,5,0),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":0				,
 		"n-fold_Symeterty":4	
 	},
 	{
 		"Direction": App.Vector(0,-2,5),
 		"Type": "x"				,
-		"Angle":0				,
+		"Rotation":0				,
 		"n-fold_Symeterty":4	
 	}
 ]
 
-Knot1WO = [
-	{
-		"Direction": App.Vector(1,2,5),
-		"Offset": App.Vector(0,0,0), # Z is always 0
-		"Type": "x"				,
-		"Angle":0				,
-		"n-fold_Symeterty":4	
-	},
-	{
-		"Direction": App.Vector(0,-2,5)	,
-		"Type": "x"				,
-		"Angle":0				,
-		"n-fold_Symeterty":4	
-	},
-	{
-		"Direction": App.Vector(2,-5,15),
-		"Type": "x"				,
-		"Angle":0				,
-		"n-fold_Symeterty":4	
-	},
-	{
-		"Direction": App.Vector(2,-5,0),
-		"Type": "x"				,
-		"Angle":0				,
-		"n-fold_Symeterty":4	
-	}
-]
-
-Knot1ID = [
-	{
-		# "Direction": App.Vector(1,2,5)	,
-		"Type": "x"							,
-		"Angle":0							,
-		"n-fold_Symeterty":4				,
-		"Angels": [1,2,3]
-	},
-	{
-		# "Direction": App.Vector(0,-2,5)	,
-		"Type": "x"							,
-		"Angle":0							,
-		"n-fold_Symeterty":4				,
-		"Angels": [1,2,3]
-	},
-	{
-		# "Direction": App.Vector(2,-5,15)	,
-		"Type": "x"							,
-		"Angle":0							,
-		"n-fold_Symeterty":4				,
-		"Angels": [1,2,3]
-	}
-]
-
-
-def isValidKnot(K)->bool: 
+def isValidKnot(K)->bool:
+	True
 	pass
 
 def updateKnot(K,Pn,data): # data = {"name":"value/Stuff"}
@@ -178,9 +132,9 @@ def removeKnotData(K,Pn,data): # data = "String"
 	Profile.pop(data)
 	return K
 
-def removeKnotData2(K,data): # data = "String"
-	for Knot in K:
-		Knot.pop(data)
+def removeKnotData2(Knot,data): # data = "String"
+	for Profile in Knot:
+		Profile.pop(data)
 
 def getAngleKnotP(Knot,n,m,deg=True)->float:
 	Vn = Knot[n]["Direction"]
@@ -191,28 +145,29 @@ def getAngleKnotP(Knot,n,m,deg=True)->float:
 		return math.degrees(alpha)
 	else:
 		return alpha
-	
-# print(getAngleKnotP(Knot1,0,2))
-	
-def DictToList(K): # Not needed Blongs in utlis Anyway
-	List = []
-	for item in K.items():
-		List.append(item[1])
-	return List
 
-def ListToDict(L): # Not needed Blongs in utlis Anyway
-	Dict = {}
-	for i in range(len(L)):
-		Dict.update({f"P{i}":L[i]})
-	return Dict
+def getAngleP2(Knot,n,m,n_key,m_key,deg=True):
+	Vn = Knot[n][n_key]
+	Vm = Knot[m][m_key]
+	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
 
-def KnotToID1(K,tol = 1e-6):
-	# Perm = list(permutations(range(len(K)),2))
+	if deg is True: # Is the function used in deg or rad mode
+		return math.degrees(alpha)
+	else:
+		return alpha
+
+def SortProfiles(K):
+	'''
+	Docstring for SortProfiles
+	
+	:param K: Knot
+	:param tol: Tolerance
+	Sorts the Profiles According to there Angle Sums
+	'''
 	for i in range(len(K)):
 		AngelSum = 0
 		for n in range(len(K)):
 			alpha = getAngleKnotP(K,i,n)
-
 			AngelSum = AngelSum + alpha
 		updateKnot(K,i,{"AngleSum":AngelSum})
 	def AngleSort(S):
@@ -221,8 +176,60 @@ def KnotToID1(K,tol = 1e-6):
 	removeKnotData2(K,"AngleSum")
 	return K
 
+def NormalizeKnot(K,deg=True):
+	'''
+	Docstring for NormalizeKnot
+	
+	:param K: Knot
+	
+	Normalizes the Contents in a Knot, to make them Uniform
+	'''
+	for Profile in K:
+		#Normaizes the Direction of the Profile
+		D = Profile["Direction"]
+		Profile.update({"Direction":D.normalize()})
+		#Normalizes the Offset of the Profile
+		O = Profile["Offset"]
+		Profile.update({"Offset":O.projectToPlane(Vector(0,0,0),D)})
+		#Normalizes the Roation
+		R = Profile["Rotation"] #Rotation Degrees not Radiants
+		Nsym = Profile["n-fold_Symeterty"]
+		if R < 0: R = 360+(R % -360)
+		Profile.update({"Rotation": R % (360/Nsym)})
+
+def KnotToID(K,deg=True):
+	if not isValidKnot(K): 
+		print("Knot is not Valid")
+		return False
+	K = copy.deepcopy(K) # Does not Mute the orignal data
+	NormalizeKnot(K,deg)
+	SortProfiles(K)
+	for i in range(len(K)):
+		K[i].update({
+			"DirectionAngels":[
+				getAngleP2(K,i,i-1,"Direction","Direction",deg),
+				getAngleP2(K,i,i-2,"Direction","Direction",deg),
+				getAngleP2(K,i,i-3,"Direction","Direction",deg),
+			]
+		})
+		K[i].update({
+			"OffsetAngels":[
+				getAngleP2(K,i,i-1,"Offset","Direction",deg),
+				getAngleP2(K,i,i-2,"Offset","Direction",deg),
+				getAngleP2(K,i,i-3,"Offset","Direction",deg),
+			]
+		})
+		K[i].update({
+			"OffsetRadius": K[i]["Offset"].Length
+		})
+	for Profile in K:
+		Profile.pop("Direction")
+		Profile.pop("Offset")
+	return K
+
+
 #This does not account for an offset yet :(
-def KnotToID(K,tol = 1e-6):
+def KnotToID2(K,tol = 1e-6):
 	"""
 	Docstring for KnotToID2
 	Generates an Oriantation indipendet idenfifer for Knot
@@ -248,11 +255,11 @@ def KnotToID(K,tol = 1e-6):
 	removeKnotData2(K,"Direction")
 	return K
 
-print(Knot1 == Knot2)
-KnotToID(Knot1)
-KnotToID(Knot2)
-print(Knot1 == Knot2)
-print_list(Knot1)
+# print(Knot1 == Knot2)
+# KnotToID(Knot1)
+# KnotToID(Knot2)
+# print(Knot1 == Knot2)
+# print_list(Knot1)
 
 def FCtoKnot():
 	pass
@@ -281,7 +288,7 @@ def IDToKnot(ID):
 	pass
 
 #----------------------------------------------------------------------------------------------------------------------------------
-#Find Axis and Angle
+#Find Axis and Rotation
 
 def IsTransformend(A1,B1,A2,B2,tol = 1e-6):
 	a = A1.getAngle(A2)
@@ -303,7 +310,7 @@ def IsOppesite(V1,V2,tol = 1e-6):
 
 def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	'''
-	Find Axis Angle, Returns the Axis and Angle Transformation, That A1 and B1 get Transformend into A2 and B2 around the Origin(0,0,0)
+	Find Axis Rotation, Returns the Axis and Rotation Transformation, That A1 and B1 get Transformend into A2 and B2 around the Origin(0,0,0)
 	A1 transforms into A2
 	B1 transforms into B2
 	'''

@@ -3,5 +3,5 @@
 
 import FreeCAD
 
-from KnotLogic import KnotToID 
+from KnotLogic import KnotToID2 
 
