@@ -119,8 +119,7 @@ Knot2 = [
 ]
 
 def isValidKnot(K)->bool:
-	True
-	pass
+	return True
 
 def updateKnot(K,Pn,data): # data = {"name":"value/Stuff"}
 	Profile = K[Pn]
@@ -135,16 +134,6 @@ def removeKnotData(K,Pn,data): # data = "String"
 def removeKnotData2(Knot,data): # data = "String"
 	for Profile in Knot:
 		Profile.pop(data)
-
-def getAngleKnotP(Knot,n,m,deg=True)->float:
-	Vn = Knot[n]["Direction"]
-	Vm = Knot[m]["Direction"]
-	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
-
-	if deg is True: # Is the function used in deg or rad mode
-		return math.degrees(alpha)
-	else:
-		return alpha
 
 def getAngleP2(Knot,n,m,n_key,m_key,deg=True):
 	Vn = Knot[n][n_key]
@@ -167,7 +156,7 @@ def SortProfiles(K):
 	for i in range(len(K)):
 		AngelSum = 0
 		for n in range(len(K)):
-			alpha = getAngleKnotP(K,i,n)
+			alpha = getAngleP2(K,i,n,"Direction","Direction")
 			AngelSum = AngelSum + alpha
 		updateKnot(K,i,{"AngleSum":AngelSum})
 	def AngleSort(S):
@@ -197,7 +186,7 @@ def NormalizeKnot(K,deg=True):
 		if R < 0: R = 360+(R % -360)
 		Profile.update({"Rotation": R % (360/Nsym)})
 
-def KnotToID(K,deg=True):
+def KnotToID(K,deg=False):
 	if not isValidKnot(K): 
 		print("Knot is not Valid")
 		return False
@@ -227,8 +216,113 @@ def KnotToID(K,deg=True):
 		Profile.pop("Offset")
 	return K
 
+# print(isValidKnot(Knot1))
+print_list(KnotToID(Knot1))
+
 def IDToKnot(ID):
-	pass
+	K = copy.deepcopy(ID)
+	n = len(K)
+	if n != 4:
+		raise ValueError("IDToKnot currently supports 4-profile knots only")
+	tol = 1e-12
+
+	def _solve3x3_rows(r1, r2, r3, b1, b2, b3):
+		a11, a12, a13 = r1
+		a21, a22, a23 = r2
+		a31, a32, a33 = r3
+		det = (
+			a11 * (a22 * a33 - a23 * a32)
+			- a12 * (a21 * a33 - a23 * a31)
+			+ a13 * (a21 * a32 - a22 * a31)
+		)
+		if abs(det) < tol:
+			raise ValueError("Degenerate knot ID (cannot solve 3x3 system)")
+		inv_det = 1.0 / det
+		dx = (
+			b1 * (a22 * a33 - a23 * a32)
+			- a12 * (b2 * a33 - a23 * b3)
+			+ a13 * (b2 * a32 - a22 * b3)
+		)
+		dy = (
+			a11 * (b2 * a33 - a23 * b3)
+			- b1 * (a21 * a33 - a23 * a31)
+			+ a13 * (a21 * b3 - b2 * a31)
+		)
+		dz = (
+			a11 * (a22 * b3 - b2 * a32)
+			- a12 * (a21 * b3 - b2 * a31)
+			+ b1 * (a21 * a32 - a22 * a31)
+		)
+		return Vector(dx * inv_det, dy * inv_det, dz * inv_det)
+
+	# Rebuild full symmetric direction-angle matrix from compact ID fields.
+	A = [[0.0 for _ in range(n)] for _ in range(n)]
+	for i, p in enumerate(K):
+		a = p["DirectionAngels"]
+		j0 = (i - 1) % n
+		j1 = (i - 2) % n
+		j2 = (i - 3) % n
+		A[i][j0] = a[0]
+		A[j0][i] = a[0]
+		A[i][j1] = a[1]
+		A[j1][i] = a[1]
+		A[i][j2] = a[2]
+		A[j2][i] = a[2]
+
+	# Build four unit direction vectors from pairwise angles.
+	a01 = A[0][1]
+	c01 = math.cos(a01)
+	s01 = math.sin(a01)
+	if abs(s01) < tol:
+		s01 = tol
+	d0 = Vector(1.0, 0.0, 0.0)
+	d1 = Vector(c01, s01, 0.0)
+
+	c02 = math.cos(A[0][2])
+	c12 = math.cos(A[1][2])
+	x2 = c02
+	y2 = (c12 - x2 * c01) / s01
+	z2_sq = 1.0 - x2 * x2 - y2 * y2
+	if z2_sq < 0.0:
+		z2_sq = 0.0
+	z2 = math.sqrt(z2_sq)
+	d2 = Vector(x2, y2, z2)
+
+	c03 = math.cos(A[0][3])
+	c13 = math.cos(A[1][3])
+	c23 = math.cos(A[2][3])
+	d3 = _solve3x3_rows(
+		(d0.x, d0.y, d0.z),
+		(d1.x, d1.y, d1.z),
+		(d2.x, d2.y, d2.z),
+		c03, c13, c23
+	)
+	dirs = [d0.normalize(), d1.normalize(), d2.normalize(), d3.normalize()]
+
+	# Rebuild offsets from their angles to the other 3 directions and radius.
+	for i, p in enumerate(K):
+		j0 = (i - 1) % n
+		j1 = (i - 2) % n
+		j2 = (i - 3) % n
+		oa0, oa1, oa2 = p["OffsetAngels"]
+		r = p["OffsetRadius"]
+		b0 = r * math.cos(oa0)
+		b1 = r * math.cos(oa1)
+		b2 = r * math.cos(oa2)
+		o = _solve3x3_rows(
+			(dirs[j0].x, dirs[j0].y, dirs[j0].z),
+			(dirs[j1].x, dirs[j1].y, dirs[j1].z),
+			(dirs[j2].x, dirs[j2].y, dirs[j2].z),
+			b0, b1, b2
+		)
+		K[i] = {
+			"Direction": dirs[i],
+			"Offset": o.projectToPlane(Vector(0,0,0), dirs[i]),
+			"Type": p.get("Type", "x"),
+			"Rotation": p["Rotation"],
+			"n-fold_Symeterty": p["n-fold_Symeterty"],
+		}
+	return K
 
 #----------------------------------------------------------------------------------------------------------------------------------
 #Find Axis and Rotation
@@ -248,8 +342,6 @@ def IsOppesite(V1,V2,tol = 1e-6):
 		return True
 	else:
 		return False
-
-
 
 def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	'''
