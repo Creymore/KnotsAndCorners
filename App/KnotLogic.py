@@ -122,29 +122,9 @@ def isValidKnot(K)->bool:
 	True
 	pass
 
-def updateKnot(K,Pn,data): # data = {"name":"value/Stuff"}
-	Profile = K[Pn]
-	Profile.update(data)
-	return K
-
-def removeKnotData(K,Pn,data): # data = "String"
-	Profile = K[Pn]
-	Profile.pop(data)
-	return K
-
 def removeKnotData2(Knot,data): # data = "String"
 	for Profile in Knot:
 		Profile.pop(data)
-
-def getAngleKnotP(Knot,n,m,deg=True)->float:
-	Vn = Knot[n]["Direction"]
-	Vm = Knot[m]["Direction"]
-	alpha = Vn.getAngle(Vm) # Retruns the angle in rad
-
-	if deg is True: # Is the function used in deg or rad mode
-		return math.degrees(alpha)
-	else:
-		return alpha
 
 def getAngleP2(Knot,n,m,n_key,m_key,deg=True):
 	Vn = Knot[n][n_key]
@@ -226,7 +206,6 @@ def KnotToID(K,deg=True):
 		Profile.pop("Direction")
 		Profile.pop("Offset")
 	return K
-
 
 def IDToKnot(ID):
 	pass
