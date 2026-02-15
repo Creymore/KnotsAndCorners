@@ -228,62 +228,6 @@ def KnotToID(K,deg=True):
 	return K
 
 
-#This does not account for an offset yet :(
-def KnotToID2(K,tol = 1e-6):
-	"""
-	Docstring for KnotToID2
-	Generates an Oriantation indipendet idenfifer for Knot
-	
-	:param K: Knot
-	:param tol: toleranz
-	"""
-	for i in range(len(K)):
-		Angels = []									#Not Sorting
-		AngelSum = 0
-		for n in range(len(K)):
-			alpha = getAngleKnotP(K,i,n)
-			if alpha > tol:							#Not Sorting
-				Angels.append(alpha)				#Not Sorting
-			AngelSum = AngelSum + alpha
-		updateKnot(K,i,{"AngleSum":AngelSum})
-		Angels.sort()								#Not Sorting
-		updateKnot(K,i,{"Angels":Angels})			#Not Sorting
-	def AngleSort(S):
-		return S["AngleSum"]
-	K.sort(key=AngleSort)
-	removeKnotData2(K,"AngleSum")
-	removeKnotData2(K,"Direction")
-	return K
-
-# print(Knot1 == Knot2)
-# KnotToID(Knot1)
-# KnotToID(Knot2)
-# print(Knot1 == Knot2)
-# print_list(Knot1)
-
-def FCtoKnot():
-	pass
-
-def KnotToAngleID(K):
-	L = len(K)
-	Combinations = list(combinations(range(L),2))
-	r = []
-	for i in range(L):
-		def myfilter(x,n=i):
-			if x[0] == n:
-				return True
-			else:
-				return False
-		Com = list(filter(myfilter,Combinations))
-		for C in Com:
-			alpha = getAngleKnotP(K,C[0],C[1])
-			r.append(alpha)
-	return r
-
-# Knot1 = SortDirections(Knot1)
-# print(KnotToAngleID(Knot1))
-
-
 def IDToKnot(ID):
 	pass
 
