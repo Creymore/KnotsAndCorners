@@ -56,6 +56,7 @@ def GenerateVector(range=100,step=1):
 def GenerateProfile(type="x",angle=0,sym=4):
 	Profile = {
 		"Direction": GenerateVector(),
+		"Offset": App.Vector(0,0,0),
 		"Type": type,
 		"Rotation":angle,
 		"n-fold_Symeterty":sym

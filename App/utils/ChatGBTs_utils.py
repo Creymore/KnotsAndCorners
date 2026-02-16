@@ -2,6 +2,9 @@
 # I wanted to seperate the code from ChatGBT from mine because of clarity
 
 import FreeCAD as App
+import time
+from functools import wraps
+
 
 # from ChatGBT
 def print_list(d, indent=0):
@@ -112,3 +115,16 @@ def print_list(data, indent=2):
         print(f"Item {i}:")
         for key, value in item.items():
             print(" " * indent + f"{key}: {value}")
+
+
+
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"{func.__name__} took {end - start:.6f} seconds")
+        return result
+    return wrapper
+

@@ -10,17 +10,17 @@ if __package__ is None or __package__ == "":
     project_root_str = str(project_root)
     if project_root_str not in sys.path:
         sys.path.insert(0, project_root_str)
-    from App.utils.ChatGBTs_utils import print_list
-    from App.KnotLogic import KnotToID2 as TestKnotToID
+    from App.utils.ChatGBTs_utils import (timer)
+    from App.KnotLogic import KnotToID as TestKnotToID
     from App.dev_tools.dev_helper import LoadKnot
 else:
-    from ..utils.ChatGBTs_utils import print_list
-    from ..KnotLogic import KnotToID2 as TestKnotToID
+    from ..utils.ChatGBTs_utils import (timer)
+    from ..KnotLogic import KnotToID as TestKnotToID
     from ..dev_tools.dev_helper import LoadKnot
 
 import random
 
-
+@timer
 def Test1():
     '''
     Test the Propety that KnotID should be Order Indiependet
@@ -40,6 +40,9 @@ def Test1():
         print("Test passed")
     else:
         print("Test Failed")
+        for i in range(len(Knot1ID)):
+            print(Knot1ID[i])
+            print(Knot1ShuffeldID[i])
 
 def Test2():
     '''
