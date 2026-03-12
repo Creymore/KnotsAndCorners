@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import sys
+import FreeCAD as App
 
 # Support running this file directly (python App/dev_tools/test.py)
 # and as a module inside the App package.
@@ -41,16 +42,260 @@ def Test1():
     else:
         print("Test Failed")
         for i in range(len(Knot1ID)):
-            print(Knot1ID[i])
-            print(Knot1ShuffeldID[i])
+            print(f"item{i}{Knot1ID[i]}")
+            print(f"item{i}{Knot1ShuffeldID[i]}")
 
+@timer
 def Test2():
     '''
-    
+    Test an edge case: Knot Sum Angels are all equal => no Change of order after Sorting
+    This Test Uses Rotation as deciding Factor
     '''
+    Knot1 = [
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation":10				, 
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation":20				,
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation":30				,
+		"Nsym":4	
+	}
+]
+    
+    Knot2 = [
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation":20				, 
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation": 10				,
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "x"				,
+		"Rotation":30				,
+		"Nsym":4	
+	}
+]
+    
+    Knot1ID = TestKnotToID(Knot1)
+    Knot2ID = TestKnotToID(Knot2)
+
+    if Knot1ID == Knot2ID:
+        print("Test passed")
+    else:
+        print("Test Failed")
+        for i in range(len(Knot1ID)):
+            print(f"item{i}{Knot1ID[i]}")
+            print(f"item{i}{Knot2ID[i]}")
     pass
 
+@timer
+def Test3():
+    '''
+    Test an edge case: Knot Sum Angels are all equal => no Change of order after Sorting
+    This Test Uses Type as deciding Factor
+    '''
+    Knot1 = [
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "A"				,
+		"Rotation":0				, 
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "B"				,
+		"Rotation":0				,
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "C"				,
+		"Rotation":0				,
+		"Nsym":4	
+	}
+]
+    
+    Knot2 = [
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "B"				,
+		"Rotation":0				, 
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "A"				,
+		"Rotation": 0				,
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "C"				,
+		"Rotation":0				,
+		"Nsym":4	
+	}
+]
+    
+    Knot1ID = TestKnotToID(Knot1)
+    Knot2ID = TestKnotToID(Knot2)
 
+    if Knot1ID == Knot2ID:
+        print("Test passed")
+    else:
+        print("Test Failed")
+        for i in range(len(Knot1ID)):
+            print(f"item{i}{Knot1ID[i]}")
+            print(f"item{i}{Knot2ID[i]}")
+    pass
+
+@timer
+def Test4():
+    '''
+    Test an edge case: Knot Sum Angels are all equal => no Change of order after Sorting
+    This Test Uses Type and Rotation as deciding Factor
+    '''
+    Knot1 = [
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,10,10),
+		"Type": "A"				,
+		"Rotation":10				, 
+		"Nsym":False	
+	},
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "B"				,
+		"Rotation":30				,
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "C"				,
+		"Rotation":0				,
+		"Nsym":4	
+	}
+]
+    
+    Knot2 = [
+	{
+		"Direction": App.Vector(0,1,0)	,
+		"Offset": App.Vector(0,0,0),
+		"Type": "B"				,
+		"Rotation":-330				, 
+		"Nsym":4	
+	},
+	{
+		"Direction": App.Vector(1,0,0)	,
+		"Offset": App.Vector(0,10,10),
+		"Type": "A"				,
+		"Rotation": -370				,
+		"Nsym":	False
+	},
+	{
+		"Direction": App.Vector(0,0,1),
+		"Offset": App.Vector(0,0,0),
+		"Type": "C"				,
+		"Rotation":0				,
+		"Nsym":4	
+	}
+]
+    
+    Knot1ID = TestKnotToID(Knot1)
+    Knot2ID = TestKnotToID(Knot2)
+
+    if Knot1ID == Knot2ID:
+        print("Test passed")
+    else:
+        print("Test Failed")
+        for i in range(len(Knot1ID)):
+            print(f"item{i}{Knot1ID[i]}")
+            print(f"item{i}{Knot2ID[i]}")
+
+@timer
+def Test5():
+	'''
+	Test for list Length of 1
+	'''
+	Knot1 = [
+		{
+			"Direction": App.Vector(1,2,5),
+			"Offset": App.Vector(10,0,0),
+			"Type": "x",
+			"Rotation": 10,
+			"Nsym": 4,
+		},
+	]
+	
+	try:
+		TestKnotToID(Knot1)
+		print("Test passed")
+	except Exception:
+		print("Test Failed | edge case of only 1 Profile is not handeld")
+	
+@timer
+def Test6():
+	'''
+	Test for list Length of 2
+	'''
+	Knot1 = [
+		{
+			"Direction": App.Vector(1,2,5),
+			"Offset": App.Vector(10,0,0),
+			"Type": "x",
+			"Rotation": 10,
+			"Nsym": 4,
+		},
+        {
+            "Direction": App.Vector(0,2,6),
+			"Offset": App.Vector(0,5,0),
+			"Type": "x",
+			"Rotation": 30,
+			"Nsym": 4,
+		}
+	]
+	
+	try:
+		TestKnotToID(Knot1)
+		print("Test passed")
+	except Exception:
+		print("Test Failed | edge case of only 2 Profile is not handeld")
+    
 
 if __name__ == "__main__" :
     Test1()
+    Test2()
+    Test3()
+    Test4()
+    Test5()
+    Test6()

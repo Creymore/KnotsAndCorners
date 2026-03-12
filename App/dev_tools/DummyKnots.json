@@ -2,23 +2,8 @@
     "Knot0": [
         {
             "Direction": [
-                27.0,
-                4.0,
-                -58.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -68.0,
-                46.0,
+                12.0,
+                52.0,
                 -22.0
             ],
             "Offset": [
@@ -28,13 +13,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -86.0,
-                73.0,
-                -94.0
+                -98.0,
+                29.0,
+                -15.0
             ],
             "Offset": [
                 0.0,
@@ -43,13 +28,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -56.0,
-                -43.0,
-                -49.0
+                98.0,
+                6.0,
+                27.0
             ],
             "Offset": [
                 0.0,
@@ -58,13 +43,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -24.0,
-                -59.0,
-                77.0
+                49.0,
+                -69.0,
+                -85.0
             ],
             "Offset": [
                 0.0,
@@ -73,15 +58,30 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -53.0,
+                -26.0,
+                -76.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
         }
     ],
     "Knot1": [
         {
             "Direction": [
-                -21.0,
-                -66.0,
-                -66.0
+                -33.0,
+                80.0,
+                -46.0
             ],
             "Offset": [
                 0.0,
@@ -90,13 +90,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -9.0,
-                -35.0,
-                -83.0
+                -71.0,
+                -43.0,
+                43.0
             ],
             "Offset": [
                 0.0,
@@ -105,13 +105,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                23.0,
-                28.0,
-                -100.0
+                22.0,
+                -99.0,
+                72.0
             ],
             "Offset": [
                 0.0,
@@ -120,13 +120,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -74.0,
-                -90.0,
-                32.0
+                -64.0,
+                -88.0,
+                66.0
             ],
             "Offset": [
                 0.0,
@@ -135,12 +135,183 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -87.0,
-                78.0,
+                -33.0,
+                -34.0,
+                16.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot2": [
+        {
+            "Direction": [
+                66.0,
+                16.0,
+                3.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                35.0,
+                60.0,
+                22.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                94.0,
+                30.0,
+                72.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                60.0,
+                50.0,
+                -33.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -84.0,
+                10.0,
+                -18.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot3": [
+        {
+            "Direction": [
+                25.0,
+                -42.0,
+                14.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -31.0,
+                37.0,
+                22.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -14.0,
+                -76.0,
+                52.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -80.0,
+                -80.0,
+                -67.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                59.0,
+                34.0,
+                -71.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot4": [
+        {
+            "Direction": [
+                41.0,
+                -33.0,
                 -51.0
             ],
             "Offset": [
@@ -150,30 +321,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot2": [
-        {
-            "Direction": [
-                -55.0,
-                -81.0,
-                78.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -81.0,
-                13.0,
-                21.0
+                -41.0,
+                29.0,
+                -85.0
             ],
             "Offset": [
                 0.0,
@@ -182,13 +336,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                -33.0,
-                -61.0,
-                55.0
+                30.0,
+                -1.0,
+                -54.0
             ],
             "Offset": [
                 0.0,
@@ -197,151 +351,12 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                15.0,
-                21.0,
-                85.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -21.0,
-                43.0,
-                56.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot3": [
-        {
-            "Direction": [
-                -31.0,
-                44.0,
-                77.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                17.0,
-                -79.0,
-                24.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -32.0,
-                1.0,
-                -16.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                0.0,
-                27.0,
-                18.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -33.0,
-                -89.0,
-                -94.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot4": [
-        {
-            "Direction": [
-                -79.0,
-                -39.0,
-                31.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -66.0,
-                -62.0,
-                22.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                21.0,
-                -30.0,
+                88.0,
+                -84.0,
                 -77.0
             ],
             "Offset": [
@@ -351,13 +366,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                66.0,
-                -50.0,
-                31.0
+                -93.0,
+                45.0,
+                38.0
             ],
             "Offset": [
                 0.0,
@@ -366,30 +381,15 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -83.0,
-                49.0,
-                -22.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         }
     ],
     "Knot5": [
         {
             "Direction": [
-                7.0,
-                -66.0,
-                90.0
+                -93.0,
+                -22.0,
+                -41.0
             ],
             "Offset": [
                 0.0,
@@ -398,229 +398,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                84.0,
-                -31.0,
-                22.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                80.0,
-                -54.0,
-                44.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                86.0,
-                -40.0,
-                -76.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -83.0,
-                22.0,
-                95.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot6": [
-        {
-            "Direction": [
-                -73.0,
-                46.0,
-                -49.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -18.0,
-                -44.0,
-                1.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -4.0,
-                -34.0,
-                -16.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                2.0,
-                -40.0,
-                13.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                87.0,
-                9.0,
-                -76.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot7": [
-        {
-            "Direction": [
-                -37.0,
-                -44.0,
-                -76.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                19.0,
-                90.0,
-                97.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                66.0,
-                -69.0,
-                -84.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -28.0,
-                -47.0,
-                -11.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -39.0,
-                14.0,
-                -11.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot8": [
-        {
-            "Direction": [
+                24.0,
                 -80.0,
-                -89.0,
-                -84.0
+                53.0
             ],
             "Offset": [
                 0.0,
@@ -629,58 +413,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                28.0,
-                59.0,
-                31.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                23.0,
-                -28.0,
-                -50.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -36.0,
-                34.0,
-                -92.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
-        },
-        {
-            "Direction": [
-                -4.0,
                 -40.0,
-                -95.0
+                -45.0,
+                -79.0
             ],
             "Offset": [
                 0.0,
@@ -689,29 +428,27 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
-        }
-    ],
-    "Knot9": [
-        {
-            "Direction": [
-                56.0,
-                81.0,
-                -47.0
-            ],
-            "Offset": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Type": "x",
-            "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                43.0,
-                -64.0,
+                35.0,
+                92.0,
+                81.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -87.0,
+                82.0,
                 -52.0
             ],
             "Offset": [
@@ -721,12 +458,275 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
+        }
+    ],
+    "Knot6": [
+        {
+            "Direction": [
+                13.0,
+                -20.0,
+                -43.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
         },
         {
             "Direction": [
-                11.0,
+                -100.0,
                 92.0,
+                88.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                94.0,
+                43.0,
+                28.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -59.0,
+                -32.0,
+                85.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -55.0,
+                -56.0,
+                -86.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot7": [
+        {
+            "Direction": [
+                -12.0,
+                -55.0,
+                -23.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                78.0,
+                -15.0,
+                -60.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                52.0,
+                -72.0,
+                26.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                19.0,
+                14.0,
+                34.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                49.0,
+                -16.0,
+                57.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot8": [
+        {
+            "Direction": [
+                -24.0,
+                -89.0,
+                -9.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -82.0,
+                92.0,
+                -7.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -44.0,
+                -16.0,
+                -14.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -64.0,
+                71.0,
+                -48.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                15.0,
+                -1.0,
+                75.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        }
+    ],
+    "Knot9": [
+        {
+            "Direction": [
+                -85.0,
+                29.0,
+                -76.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                2.0,
+                93.0,
+                33.0
+            ],
+            "Offset": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Type": "x",
+            "Rotation": 0,
+            "Nsym": 4
+        },
+        {
+            "Direction": [
+                -9.0,
+                67.0,
                 -66.0
             ],
             "Offset": [
@@ -736,13 +736,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                16.0,
-                -43.0,
-                -56.0
+                6.0,
+                50.0,
+                45.0
             ],
             "Offset": [
                 0.0,
@@ -751,13 +751,13 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         },
         {
             "Direction": [
-                7.0,
-                24.0,
-                -97.0
+                26.0,
+                64.0,
+                72.0
             ],
             "Offset": [
                 0.0,
@@ -766,7 +766,7 @@
             ],
             "Type": "x",
             "Rotation": 0,
-            "n-fold_Symeterty": 4
+            "Nsym": 4
         }
     ]
 }

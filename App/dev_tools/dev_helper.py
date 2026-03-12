@@ -59,7 +59,7 @@ def GenerateProfile(type="x",angle=0,sym=4):
 		"Offset": App.Vector(0,0,0),
 		"Type": type,
 		"Rotation":angle,
-		"n-fold_Symeterty":sym
+		"Nsym":sym
 	}
 	return Profile
 
@@ -248,10 +248,11 @@ if __name__ == "__main__" :
 	# print(myBASEPATH)
 	# GenerateTestKnotFile("test1",myBASEPATH)
 
-	Knots = GenerateKnots(10)
+	#Knots = GenerateKnots(10)
 	# print(Knots[0])
-	SaveKnots(Knots)
+	#SaveKnots(Knots)
 	K = LoadKnot(2)
 	print(K)
+	#TransformKnot()
 
 	pass

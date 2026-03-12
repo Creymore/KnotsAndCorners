@@ -4,6 +4,8 @@
 import FreeCAD as App
 import time
 from functools import wraps
+import FreeCADGui as Gui
+
 
 
 # from ChatGBT
@@ -128,3 +130,20 @@ def timer(func):
         return result
     return wrapper
 
+
+def SelectionToMembers():
+    def get_body(obj):
+        while obj:
+            if obj.TypeId == "PartDesign::Body":
+                return obj
+            obj = obj.getParentGeoFeatureGroup()
+        return None
+
+    bodies = set()
+
+    for obj in Gui.Selection.getSelection():
+        body = get_body(obj)
+        if body:
+            bodies.add(body)
+
+    return list(bodies)

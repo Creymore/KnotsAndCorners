@@ -12,25 +12,44 @@ import sys
 # Support running this file directly (python App/KnotLogic.py)
 # and as a module inside the App package.
 if __package__ is None or __package__ == "":
-    project_root = Path(__file__).resolve().parents[1]
-    project_root_str = str(project_root)
-    if project_root_str not in sys.path:
-        sys.path.insert(0, project_root_str)
-    from App.utils.ChatGBTs_utils import (
-        print_list,
-        print_list,
-    )
+	project_root = Path(__file__).resolve().parents[1]
+	project_root_str = str(project_root)
+	if project_root_str not in sys.path:
+		sys.path.insert(0, project_root_str)
+	from App.utils.ChatGBTs_utils import (
+		print_list,
+		print_list,
+		timer
+	)
+	from App.utils.GloabalPlacement import (
+		get_global_placement,
+	)
+	from App.utils.utils import(
+		VecToTuple,
+		copyVec
+	)
 else:
-    from .utils.ChatGBTs_utils import (
-        print_list,
-        print_list,
-    )
+	from .utils.ChatGBTs_utils import (
+		print_list,
+		print_list,
+		timer
+	)
+	from .utils.GloabalPlacement import (
+		get_global_placement
+	)
+	from .utils.utils import(
+		VecToTuple,
+		copyVec
+	)
+
 import FreeCAD as App
 from FreeCAD import Vector
 import math
 import copy
 from itertools import combinations
 from itertools import permutations
+from itertools import combinations_with_replacement
+from collections import Counter
 
 ##############################################################################################
 
@@ -58,79 +77,156 @@ from itertools import permutations
 # print(A1.getAngle(A2))
 
 #Data structure
-# Should the Knot data be turned into a List ??? Probably better
-
 Knot1 = [
 	{
-		"Direction": App.Vector(1,2,5)	,
-		"Offset": App.Vector(10,0,0),
-		"Type": "x"				,
-		"Rotation":10				, #Should this be just the direction of the X or Y Axis of the Body
-		"n-fold_Symeterty":4	
+		"Direction": App.Vector(1,2,5)	, # Direction Always Points away from the Knots center
+		"Offset": App.Vector(10,0,0)	,
+		"Type": "x"						,
+		"Rotation":10					, #Should this be just the direction of the X or Y Axis of the Body
+		"Nsym":4						, # How often the Crossection Matches itself along a 360 deg turn around its Geometric Center
 	},
 	{
 		"Direction": App.Vector(0,-2,5)	,
 		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
 		"Rotation":-20				,
-		"n-fold_Symeterty":4	
+		"Nsym":4	
 	},
 	{
 		"Direction": App.Vector(2,-5,15),
 		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
 		"Rotation":-1055				,
-		"n-fold_Symeterty":4	
+		"Nsym":4	
 	},
 	{
 		"Direction": App.Vector(2,5,0),
 		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
 		"Rotation":322				,
-		"n-fold_Symeterty":4	
+		"Nsym":4	
 	}
 ]
 
 Knot2 = [
 	{
-		"Direction": App.Vector(2,-5,15)	,
-		"Type": "x"				,
-		"Rotation":0				,
-		"n-fold_Symeterty":4	
+		"Direction": App.Vector(5,2,-1)	, 
+		"Offset": App.Vector(10,0,0)	,
+		"Type": "x"						,
+		"Rotation":10					, 
+		"Nsym":4						, 
 	},
 	{
-		"Direction": App.Vector(1,2,5)	,
+		"Direction": App.Vector(5,-2,0)	,
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Rotation":0				,
-		"n-fold_Symeterty":4	
+		"Rotation":-20				,
+		"Nsym":4	
 	},
 	{
-		"Direction": App.Vector(2,5,0),
+		"Direction": App.Vector(15,-5,-2),
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Rotation":0				,
-		"n-fold_Symeterty":4	
+		"Rotation":-1055				,
+		"Nsym":4	
 	},
 	{
-		"Direction": App.Vector(0,-2,5),
+		"Direction": App.Vector(0,5,-2),
+		"Offset": App.Vector(0,10,0),
 		"Type": "x"				,
-		"Rotation":0				,
-		"n-fold_Symeterty":4	
+		"Rotation":322				,
+		"Nsym":4	
 	}
 ]
 
-def FCtoKnot(Selection): #Selection only works with Bodys/Profiles that Belong to one Knot
-	for obj in Selection:
+def MemberstoKnot(Bodies): #Selection only works with Bodys/Profiles that Belong to one Knot
+	'''
+	Input: Bodies
+	Output: Knot
+	Discription:
+	Turns the Selechted Bodies / Frame Members into a Knot to be used in the KnotToID function
+	'''
+################################################################################################
+	#Get informations from Bodies to turn into a "PreKnot" which then gets Processed into a Knot
+	PreKnot = []
+	for obj in Bodies:
 		Feature = obj.AttachmentSupport[0][0].Name
 		Support = obj.AttachmentSupport[0][1][0]
 
 		direction = obj.Placement.Rotation * App.Vector(0,0,1)
-		Position = obj.Placement.Base # In the Local Coordinate System of the Parent Part/Assambly
+		Position = obj.Placement.Base # In the Local Coordinate System of the Parent Part/Assambly | Results in Offset somehow
+		Rotation = obj.AttachmentOffset.Rotation.Angle # In radiants
+		Rotation = math.degrees(Rotation)
+
+		# How do I determin which Orientdation of the Profile Faces the Knot, Directions always must show away from the Knot center Point
+
+		def isProfile(obj):
+			if obj.Name.startswith("Pad") and obj.Label.startswith("Profile"):
+				return True
+			else:
+				return False
 	
-		sub = App.ActiveDocument.getObject(Feature).Shape
+		Pad = list(filter(isProfile,obj.Group))[0]
+		Type = getattr(Pad.Profile[0], "Type", "NotProfile")
+		sym = getattr(Pad.Profile[0], "Nysm", False)
+
+		sub = App.ActiveDocument.getObject(Feature).getSubObject(Support)
 		EndPoints = [sub.Vertexes[0].Point,sub.Vertexes[1].Point]
+		
+		data =	{
+				"Feature": Feature,
+				"Support": Support,
+				"direction":direction,
+				"Position": Position,
+				"Rotation":Rotation,
+				"Type": Type,
+				"nsym": sym,
+				"Points": EndPoints,
+				}
+		PreKnot.append(
+			data
+		)
 
-	pass
+#################################################################################
 
+	allvalues = []
+	for data in PreKnot:
+		Points = data["Points"]
+		for Point in Points:
+			allvalues.append(
+				(
+					Point.x,
+					Point.y,
+					Point.z
+				)
+			)
+
+	mostcommenValue = Counter(allvalues).most_common(1)[0][0]
+	
+	KnotCenter = App.Vector(mostcommenValue[0],mostcommenValue[1],mostcommenValue[2])
+	
+	for data in PreKnot:
+		if not data["Points"][0].isEqual(KnotCenter,1e-6):
+			data["Points"].reverse()
+		if not data["Points"][0].isEqual(KnotCenter,1e-6):
+			PreKnot.remove(data) 
+			#Delets the data of the Profile not sharing the Knot center Point
+			App.Console.PrintMessage("Removed non connected Profile")
+			App.Console.PrintMessage("\n")
+
+##################################################################################
+
+	Knot = []
+	for i in range(len(PreKnot)):
+		Knot.append({
+			"Direction": PreKnot[i]["Points"][1] - PreKnot[i]["Points"][0]	,
+			"Offset": PreKnot[i]["Position"] - KnotCenter						,
+			"Type": PreKnot[i]["Type"]										,
+			"Rotation": PreKnot[i]["Rotation"]								,
+			"Nsym": PreKnot[i]["nsym"]										,
+		})
+	
+	return Knot
 
 
 # On the TODO list
@@ -169,6 +265,14 @@ def SortProfiles(K):
 	:param tol: Tolerance
 	Sorts the Profiles According to there Angle Sums
 	'''
+	def TypeSort(S):
+		return S["Type"]
+	K.sort(key=TypeSort)
+
+	def RotationSort(S):
+		return S["Rotation"]
+	K.sort(key = RotationSort)
+
 	for i in range(len(K)):
 		AngelSum = 0
 		for n in range(len(K)):
@@ -181,7 +285,7 @@ def SortProfiles(K):
 	removeKnotData2(K,"AngleSum")
 	return K
 
-def NormalizeKnot(K,deg=True):
+def NormalizeKnot(Knot,deg=True):
 	'''
 	Docstring for NormalizeKnot
 	
@@ -189,7 +293,7 @@ def NormalizeKnot(K,deg=True):
 	
 	Normalizes the Contents in a Knot, to make them Uniform
 	'''
-	for Profile in K:
+	for Profile in Knot:
 		#Normaizes the Direction of the Profile
 		D = Profile["Direction"]
 		Profile.update({"Direction":D.normalize()})
@@ -198,33 +302,37 @@ def NormalizeKnot(K,deg=True):
 		Profile.update({"Offset":O.projectToPlane(Vector(0,0,0),D)})
 		#Normalizes the Roation
 		R = Profile["Rotation"] #Rotation Degrees not Radiants
-		Nsym = Profile["n-fold_Symeterty"]
-		if R < 0: R = 360+(R % -360)
-		Profile.update({"Rotation": R % (360/Nsym)})
+		Nsym = Profile["Nsym"]
+		if Nsym is not False: # Is only False if there is No symetry like a Circlar od Ring Profile
+			if R < 0: R = 360+(R % -360)
+			Profile.update({"Rotation": R % (360/Nsym)})
+		else:
+			Profile.update({"Rotation": 0}) # Rotation does not Matter for a Cirular Profile
 
-def KnotToID(K,deg=False):
+def KnotToID(K,deg=True):
 	if not isValidKnot(K): 
 		print("Knot is not Valid")
 		return False
 	K = copy.deepcopy(K) # Does not Mute the orignal data
 	NormalizeKnot(K,deg)
 	SortProfiles(K)
-	for i in range(len(K)):
+	L= len(K)
+	for i in range(L):
 		K[i].update({
 			"DirectionAngels":[
-				getAngleP2(K,i,i-1,"Direction","Direction",deg),
-				getAngleP2(K,i,i-2,"Direction","Direction",deg),
-				getAngleP2(K,i,i-3,"Direction","Direction",deg),
+				getAngleP2(K,i,(i+1)%L,"Direction","Direction",deg),
+				getAngleP2(K,i,(i+2)%L,"Direction","Direction",deg),
+				getAngleP2(K,i,(i+3)%L,"Direction","Direction",deg),
 			]
 		})
 		K[i].update({
 			"OffsetAngels":[
-				getAngleP2(K,i,i-1,"Offset","Direction",deg),
-				getAngleP2(K,i,i-2,"Offset","Direction",deg),
-				getAngleP2(K,i,i-3,"Offset","Direction",deg),
+				getAngleP2(K,i,(i+1)%L,"Offset","Direction",deg),
+				getAngleP2(K,i,(i+2)%L,"Offset","Direction",deg),
+				getAngleP2(K,i,(i+3)%L,"Offset","Direction",deg),
 			]
 		})
-		for n in range(len(K[i]["OffsetAngels"])): #Because nan is not equal to nan, it gets repalced by 
+		for n in range(len(K[i]["OffsetAngels"])): #Because nan is not equal to nan, it gets repalced by "NotaNumber"
 			if math.isnan(K[i]["OffsetAngels"][n]):
 				K[i]["OffsetAngels"][n] = "NotaNumber"
 		K[i].update({
@@ -235,168 +343,14 @@ def KnotToID(K,deg=False):
 		Profile.pop("Offset")
 	return K
 
+#print_list(KnotToID(Knot2))
+
 # Codex made this
-# It is not needed but is a fun challange, Also Codex failed to use the invuild FreeCAD functions So minus points for that
+# It is not needed but is a fun challange, Also Codex failed to use the incuild FreeCAD functions So minus points for that
 def IDToKnot(ID):
-	if not ID:
-		return []
+	pass
 
-	N = len(ID)
-	eps = 1e-12
-
-	def _is_degree_values(profiles, key):
-		for p in profiles:
-			for a in p.get(key, []):
-				if abs(a) > (2 * math.pi + 1e-6):
-					return True
-		return False
-
-	use_deg = _is_degree_values(ID, "DirectionAngels") or _is_degree_values(ID, "OffsetAngels")
-
-	def _to_rad(a):
-		return math.radians(a) if use_deg else a
-
-	def _clamp(v, lo=-1.0, hi=1.0):
-		if v < lo:
-			return lo
-		if v > hi:
-			return hi
-		return v
-
-	def _dot(a, b):
-		return (a[0] * b[0]) + (a[1] * b[1]) + (a[2] * b[2])
-
-	def _norm(v):
-		return math.sqrt(_dot(v, v))
-
-	def _normalize(v):
-		n = _norm(v)
-		if n < eps:
-			return (1.0, 0.0, 0.0)
-		return (v[0] / n, v[1] / n, v[2] / n)
-
-	def _solve3(A, b):
-		# Fast explicit 3x3 solve via Cramer's rule
-		(a11, a12, a13), (a21, a22, a23), (a31, a32, a33) = A
-		det = (
-			a11 * (a22 * a33 - a23 * a32)
-			- a12 * (a21 * a33 - a23 * a31)
-			+ a13 * (a21 * a32 - a22 * a31)
-		)
-		if abs(det) < eps:
-			return None
-
-		def det3(
-			m11, m12, m13,
-			m21, m22, m23,
-			m31, m32, m33,
-		):
-			return (
-				m11 * (m22 * m33 - m23 * m32)
-				- m12 * (m21 * m33 - m23 * m31)
-				+ m13 * (m21 * m32 - m22 * m31)
-			)
-
-		dx = det3(b[0], a12, a13, b[1], a22, a23, b[2], a32, a33)
-		dy = det3(a11, b[0], a13, a21, b[1], a23, a31, b[2], a33)
-		dz = det3(a11, a12, b[0], a21, a22, b[1], a31, a32, b[2])
-		inv_det = 1.0 / det
-		return (dx * inv_det, dy * inv_det, dz * inv_det)
-
-	def _angle_ij(i, j, key):
-		# key is either "DirectionAngels" or "OffsetAngels"
-		arr = ID[i].get(key, [])
-		d = (i - j) % N
-		if d == 1 and len(arr) > 0:
-			return _to_rad(arr[0])
-		if d == 2 and len(arr) > 1:
-			return _to_rad(arr[1])
-		if d == 3 and len(arr) > 2:
-			return _to_rad(arr[2])
-		# fallback: read from j if present
-		rd = (j - i) % N
-		jarr = ID[j].get(key, [])
-		if rd == 1 and len(jarr) > 0:
-			return _to_rad(jarr[0])
-		if rd == 2 and len(jarr) > 1:
-			return _to_rad(jarr[1])
-		if rd == 3 and len(jarr) > 2:
-			return _to_rad(jarr[2])
-		return 0.0
-
-	# Rebuild direction vectors (unit length)
-	D = []
-	if N == 1:
-		D = [(1.0, 0.0, 0.0)]
-	elif N == 2:
-		t01 = _angle_ij(0, 1, "DirectionAngels")
-		D = [
-			(1.0, 0.0, 0.0),
-			(_clamp(math.cos(t01)), math.sin(t01), 0.0),
-		]
-	else:
-		t01 = _angle_ij(0, 1, "DirectionAngels")
-		t02 = _angle_ij(0, 2, "DirectionAngels")
-		t12 = _angle_ij(1, 2, "DirectionAngels")
-
-		c01 = _clamp(math.cos(t01))
-		s01 = math.sin(t01)
-		if abs(s01) < eps:
-			s01 = eps if s01 >= 0 else -eps
-
-		d0 = (1.0, 0.0, 0.0)
-		d1 = _normalize((c01, s01, 0.0))
-		x2 = _clamp(math.cos(t02))
-		y2 = (math.cos(t12) - x2 * c01) / s01
-		z2_sq = max(0.0, 1.0 - x2 * x2 - y2 * y2)
-		d2 = _normalize((x2, y2, math.sqrt(z2_sq)))
-		D = [d0, d1, d2]
-
-		for i in range(3, N):
-			c0 = _clamp(math.cos(_angle_ij(i, 0, "DirectionAngels")))
-			c1 = _clamp(math.cos(_angle_ij(i, 1, "DirectionAngels")))
-			c2 = _clamp(math.cos(_angle_ij(i, 2, "DirectionAngels")))
-			A = [D[0], D[1], D[2]]
-			solved = _solve3(A, [c0, c1, c2])
-			if solved is None:
-				# Stable fallback if the linear system is nearly singular
-				solved = (c0, c1, c2)
-			D.append(_normalize(solved))
-
-	# Rebuild offsets from per-profile angle/radius constraints
-	O = []
-	for i in range(N):
-		r = float(ID[i].get("OffsetRadius", 0.0))
-		if r == 0.0:
-			O.append((0.0, 0.0, 0.0))
-			continue
-
-		j1, j2, j3 = (i - 1) % N, (i - 2) % N, (i - 3) % N
-		p1 = _to_rad(ID[i].get("OffsetAngels", [0.0, 0.0, 0.0])[0] if len(ID[i].get("OffsetAngels", [])) > 0 else 0.0)
-		p2 = _to_rad(ID[i].get("OffsetAngels", [0.0, 0.0, 0.0])[1] if len(ID[i].get("OffsetAngels", [])) > 1 else 0.0)
-		p3 = _to_rad(ID[i].get("OffsetAngels", [0.0, 0.0, 0.0])[2] if len(ID[i].get("OffsetAngels", [])) > 2 else 0.0)
-		b = [r * _clamp(math.cos(p1)), r * _clamp(math.cos(p2)), r * _clamp(math.cos(p3))]
-		A = [D[j1], D[j2], D[j3]]
-		solved = _solve3(A, b)
-		if solved is None:
-			# Fallback vector still matches the requested radius quickly.
-			solved = (r, 0.0, 0.0)
-		O.append(solved)
-
-	# Convert into Knot structure expected by KnotToID
-	K = []
-	for i in range(N):
-		pi = ID[i]
-		K.append({
-			"Direction": App.Vector(D[i][0], D[i][1], D[i][2]),
-			"Offset": App.Vector(O[i][0], O[i][1], O[i][2]),
-			"Type": pi.get("Type", "x"),
-			"Rotation": pi.get("Rotation", 0),
-			"n-fold_Symeterty": pi.get("n-fold_Symeterty", 1),
-		})
-	return K
-
-# KnotID1 = KnotToID(Knot1)
+#KnotID1 = KnotToID(Knot1)
 # Knot1B = IDToKnot(KnotID1)
 # # print_list(Knot1B)
 # KnotID2 = KnotToID(Knot1B)
@@ -426,9 +380,17 @@ def IsOppesite(V1,V2,tol = 1e-6):
 
 def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	'''
-	Find Axis Rotation, Returns the Axis and Rotation Transformation, That A1 and B1 get Transformend into A2 and B2 around the Origin(0,0,0)
-	A1 transforms into A2
-	B1 transforms into B2
+	Find Axis Rotation, Returns the Axis and Rotation Transformation, That A1 and A2 get Transformend into B1 and B2 around the Origin(0,0,0)
+	A1 transforms into B1
+	A2 transforms into B2
+	A gets Transformed / Start
+	B is Stationary / Traget
+	returns: (axis,angle) 
+		axis as FreeCAD.Vector(x,y,z)
+		angle as floate
+	OR 
+	returns False
+		if there is no match found
 	'''
 	A1,B1,A2,B2 = A1.normalize(),B1.normalize(),A2.normalize(),B2.normalize()
 	if not IsTransformend(A1,B1,A2,B2):
@@ -461,6 +423,7 @@ def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	rot = App.Rotation(axis, math.degrees(angle))
 	T1 = rot.multVec(A1)
 	T1 = T1.normalize()
+	#print(T1.getAngle(B1))
 	if T1.getAngle(B1)>tol: #getAngle interval 0,pi
 		angle = -angle
 
@@ -472,7 +435,90 @@ def FindAxisAngle(A1,B1,A2,B2,deg = True,tol = 1e-6):
 	# print(T1.getAngle(B1))
 	
 	if deg is True: # Is the function used in deg or rad mode
-		return [axis,math.degrees(angle)]
+		return (axis,math.degrees(angle))
 	else:
-		return [axis,angle]
+		return (axis,angle)
 
+def TransformKnot(Knot,axis,angle,deg=True):
+	if deg is False: 				# Rotation argument for angle is degrees by default
+		angle = math.degrees(angle) # so Radiants get convertertet right
+	rot = App.Rotation(axis,angle)
+	for Profile in Knot:
+		Profile["Direction"] = rot.multVec(Profile["Direction"])
+	return(Knot)
+
+#print_list(Knot1)
+#print_list(TransformKnot(Knot1,App.Vector(0,10,0),90))
+
+def isKnotMatch(K1,K2): #What about tolerance ?????
+	'''
+	Finds out if the Knot 1 does match Knot 2
+	Knot 1 is the Knot that is transfomed to
+	Knot 2 is the Transformed Knot
+	'''
+	List1 = []
+	List2 = []
+	for L1 in K1:
+		List1.append(VecToTuple(L1["Direction"]))
+	
+	for L2 in K2:
+		List2.append(VecToTuple(L2["Direction"]))
+
+	C1 = Counter(List1)
+	C2 = Counter(List2)
+
+	if C1 == C2:
+		return True
+	else:
+		return False
+
+#isKnotMatch(Knot1,TransformKnot(copy.deepcopy(Knot1),App.Vector(1,0,0),0))
+@timer
+def FindallMatches(K1,K2):
+	'''
+	K1: Knot1 Stationary, 
+	K2: Knot2 gets Transformed
+	Discription:
+		Finds all the Machtches, wehere K2 gets Transformed into K1 successfully
+	'''
+	L = len(K1) #K1 has the same length as K2, otherwise something went wrong eralier
+	per = list(permutations(range(L),2))
+	allPairings = list(combinations_with_replacement(per,2))
+	for pairing in allPairings:
+		A1 = K2[pairing[1][0]]["Direction"] #Transformed
+		A2 = K2[pairing[1][1]]["Direction"]
+
+		B1 = K1[pairing[0][0]]["Direction"] #Stationarrys
+		B2 = K1[pairing[0][1]]["Direction"]
+
+		A1,B1,A2,B2 = copyVec(A1),copyVec(B1),copyVec(A2),copyVec(B2)
+		
+		axisAngle = FindAxisAngle(A1,B1,A2,B2)
+		if axisAngle is not False:
+			K2T = TransformKnot(copy.deepcopy(K2),axisAngle[0],axisAngle[1]) # deepcopy to not mute the orgnial Knont
+			for i in range(len(K1)):
+				print(K1[i])
+				print(K2T[i])
+			
+			print(pairing)
+			print(axisAngle)
+			if isKnotMatch(K1,K2T) is True: #Rework the is match function
+				print("Succes")
+			
+			
+
+	pass
+
+FindallMatches(Knot1,TransformKnot(copy.deepcopy(Knot1),App.Vector(1,0,0),90))
+#FindallMatches(Knot1,Knot2)
+
+# if __name__ == "__main__":
+# 	import FreeCADGui as Gui
+# 	sel = Gui.Selection.getSelection()
+# 	Knot = MemberstoKnot(sel)
+# 	KnotID = KnotToID(Knot)
+
+# 	for data in KnotID:
+# 		App.Console.PrintMessage(data)
+# 		App.Console.PrintMessage("\n")
+	
