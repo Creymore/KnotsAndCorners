@@ -63,7 +63,7 @@ def GenerateProfile(type="x",angle=0,sym=4):
 	}
 	return Profile
 
-def GenerateKnot(proflies=5,type="x",angle=0,sym=4):
+def GenerateKnot(proflies=20,type="x",angle=0,sym=4):
 	knot = []
 	for i in range(proflies):
 		knot.append(GenerateProfile())
@@ -248,9 +248,9 @@ if __name__ == "__main__" :
 	# print(myBASEPATH)
 	# GenerateTestKnotFile("test1",myBASEPATH)
 
-	#Knots = GenerateKnots(10)
+	Knots = GenerateKnots(10)
 	# print(Knots[0])
-	#SaveKnots(Knots)
+	SaveKnots(Knots)
 	K = LoadKnot(2)
 	print(K)
 	#TransformKnot()

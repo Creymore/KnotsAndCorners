@@ -8,11 +8,46 @@ Load File
 import FreeCAD as App
 import os
 import hashlib
-from App.utils.utils import isFCfile
 import random
 
-from App.dev_tools.dev_helper import loadBASEPATH
+from pathlib import Path
+import sys
 
+if __package__ is None or __package__ == "":
+    project_root = Path(__file__).resolve().parents[1]
+    project_root_str = str(project_root)
+    if project_root_str not in sys.path:
+        sys.path.insert(0, project_root_str)
+    from App.utils.ChatGBTs_utils import (
+        print_list,
+        print_list,
+		timer
+	)
+    from App.utils.GloabalPlacement import (
+		get_global_placement,
+	)
+    from App.utils.utils import(
+		isFCfile
+	)
+    from App.dev_tools.dev_helper import(
+		loadBASEPATH
+	)
+else:
+	from .utils.ChatGBTs_utils import (
+		print_list,
+		print_list,
+		timer
+	)
+	from .utils.GloabalPlacement import (
+		get_global_placement
+	)
+	from .utils.utils import(
+		VecToTuple,
+		copyVec
+	)
+	from .dev_tools.dev_helper import(
+		loadBASEPATH
+	)
 
 '''
 This uses the Os (Windows/Linux/Mac) as a database
@@ -147,14 +182,14 @@ def MigrationScript(TargetPath,InputPath,N):
 if __name__ == "__main__":
     def test(BASEPATH):
         test1 = "String"
-        # AddFileWithID(test1,BASEPATH,name="test1")
+        AddFileWithID(test1,BASEPATH,name="test1")
         SaveKnotWithID(test1,BASEPATH)
         test2 = f"fString"
-        # AddFileWithID(test2,BASEPATH,name="test2")
+        AddFileWithID(test2,BASEPATH,name="test2")
         SaveKnotWithID(test2,BASEPATH)
         i = 10
         test3 = f"fStringi{i}"
-        # AddFileWithID(test3,BASEPATH,name="test3")
+        AddFileWithID(test3,BASEPATH,name="test3")
         SaveKnotWithID(test3,BASEPATH)
 
         print(SearchValidPaths(test1,BASEPATH,"Load"))
@@ -194,5 +229,5 @@ if __name__ == "__main__":
     BASEPATH = f"{BASEPATH}/DataBase"
     print(SearchValidPaths("Test400",BASEPATH,Mode="Load"))
     # CreateData(BASEPATH)
-    test3(BASEPATH)
+    test(BASEPATH)
     

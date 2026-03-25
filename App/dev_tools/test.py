@@ -13,13 +13,28 @@ if __package__ is None or __package__ == "":
         sys.path.insert(0, project_root_str)
     from App.utils.ChatGBTs_utils import (timer)
     from App.KnotLogic import KnotToID as TestKnotToID
-    from App.dev_tools.dev_helper import LoadKnot
+    from App.dev_tools.dev_helper import (
+         LoadKnot,
+         SaveKnots,
+		)
 else:
     from ..utils.ChatGBTs_utils import (timer)
     from ..KnotLogic import KnotToID as TestKnotToID
     from ..dev_tools.dev_helper import LoadKnot
 
 import random
+
+def TrickyKnots():
+	Knot1 = [
+         
+	]
+
+	Ks = [
+    	Knot1,
+	]
+	SaveKnots(Ks,"App/dev_tools/TrickyKnots.json")
+
+	pass
 
 @timer
 def Test1():
@@ -290,7 +305,7 @@ def Test6():
 		print("Test passed")
 	except Exception:
 		print("Test Failed | edge case of only 2 Profile is not handeld")
-    
+
 
 if __name__ == "__main__" :
     Test1()
